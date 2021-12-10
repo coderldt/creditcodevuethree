@@ -1,28 +1,36 @@
 <template>
   <div class="logo" @click="backHome">
-    <img :src="logo" alt="" />
+    <img :src="logoPath" alt="" />
     <span class="title" v-if="title">{{ title }}</span>
   </div>
 </template>
-<script setup>
+<script>
 import {} from "vue";
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 import logo from "@/assets/logo.png";
-const router = useRouter()
-console.log(router);
-defineProps({
-  title: String,
-});
+export default {
+  props: {
+    title: String,
+  },
+  setup() {
+    const router = useRouter();
+    const backHome = () => {
+      router.push("/home");
+    };
 
-const backHome = () => {
-  router.push('/home')
-}
+    const logoPath = logo;
+    return {
+      backHome,
+      logoPath,
+    };
+  },
+};
 </script>
 
 <style lang="less" scoped>
 .logo {
   width: 200px;
-  height: 100%;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;

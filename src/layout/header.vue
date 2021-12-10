@@ -1,16 +1,11 @@
 <template>
-  <div class="header">
-    <Logo title="我的征信"></Logo>
-  </div>
+  <div class="header"></div>
 </template>
 <script>
 import {} from "vue";
-import Logo from "@/components/logo";
 export default {
   setup() {},
-  components: {
-    Logo,
-  },
+  components: {},
 };
 </script>
 
