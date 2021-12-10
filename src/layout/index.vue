@@ -2,7 +2,7 @@
   <el-container>
     <el-aside width="200px">
       <Logo :title="configData.title"></Logo>
-      <Menu></Menu>
+      <!-- <Menu></Menu> -->
     </el-aside>
     <el-container>
       <el-header><Header></Header></el-header>
@@ -16,7 +16,7 @@
 import {} from "vue";
 import Logo from "@/components/logo";
 import Header from "./header.vue";
-import Menu from "@/components/menu";
+// import Menu from "@/components/menu";
 import { config } from "@/config/";
 export default {
   setup() {
@@ -28,7 +28,7 @@ export default {
   components: {
     Header,
     Logo,
-    Menu,
+    // Menu,
   },
 };
 </script>
@@ -37,7 +37,6 @@ export default {
 .el-header {
   background-color: #fff;
   color: var(--el-text-color-primary);
-  text-align: center;
   line-height: 60px;
   padding: 0;
   box-shadow: 1px 0 3px #eaeaea;

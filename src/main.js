@@ -5,8 +5,10 @@ import store from "./store";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import "@/assets/css/index.less";
+import globalIconComponents from "@/components/elIcon";
 
 const app = createApp(App);
 
 app.use(ElementPlus);
+globalIconComponents(app);
 app.use(store).use(router).mount("#app");
