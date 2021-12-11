@@ -1,22 +1,31 @@
 <template>
   <div class="header">
-    <Collapse></Collapse>
+    <Collapse class="collapse"></Collapse>
+    <My class="my"></My>
   </div>
 </template>
 <script>
 import {} from "vue";
 import Collapse from "@/components/collapse";
+import My from "@/components/my";
 export default {
-  setup() {},
   components: {
     Collapse,
+    My,
   },
+  setup() {},
 };
 </script>
 
 <style lang="less" scoped>
 .header {
+  display: flex;
   height: 100%;
   padding: 0 20px;
+
+  .my {
+    flex: 1;
+    text-align: right;
+  }
 }
 </style>
