@@ -39,7 +39,7 @@ export default {
   color: var(--el-text-color-primary);
   line-height: 60px;
   padding: 0;
-  box-shadow: 1px 0 3px #eaeaea;
+  box-shadow: 1px 0 3px #aeadad;
   z-index: 1;
 }
 
@@ -49,23 +49,13 @@ export default {
   color: var(--el-text-color-primary);
   text-align: center;
   line-height: 200px;
-  box-shadow: 2px 0px 5px #eaeaea;
+  box-shadow: 2px 0px 5px #e4e2e2;
   z-index: 2;
 }
 
 .el-main {
-  background-color: #fff;
+  background-color: #f3f6f8;
   color: var(--el-text-color-primary);
-  text-align: center;
-  line-height: 160px;
-}
-
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
-
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
+  padding: 20px;
 }
 </style>
