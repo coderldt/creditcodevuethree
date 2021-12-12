@@ -1,8 +1,8 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside :width="collapseStatus ? '63px' : '200px'">
       <Logo :title="configData.title"></Logo>
-      <!-- <Menu></Menu> -->
+      <Menu></Menu>
     </el-aside>
     <el-container>
       <el-header><Header></Header></el-header>
@@ -13,22 +13,24 @@
   </el-container>
 </template>
 <script>
-import {} from "vue";
+import { inject } from "vue";
 import Logo from "@/components/logo";
 import Header from "./header.vue";
-// import Menu from "@/components/menu";
+import Menu from "@/components/menu";
 import { config } from "@/config/";
 export default {
   setup() {
     const configData = config;
+    const { collapseStatus } = inject("collapse");
     return {
       configData,
+      collapseStatus,
     };
   },
   components: {
     Header,
     Logo,
-    // Menu,
+    Menu,
   },
 };
 </script>
@@ -51,6 +53,7 @@ export default {
   line-height: 200px;
   box-shadow: 2px 0px 5px #e4e2e2;
   z-index: 2;
+  transition: width 0.5s;
 }
 
 .el-main {

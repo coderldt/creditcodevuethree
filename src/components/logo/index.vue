@@ -1,11 +1,11 @@
 <template>
   <div class="logo" @click="backHome">
     <img :src="logoPath" alt="" />
-    <span class="title" v-if="title">{{ title }}</span>
+    <span class="title" v-if="!collapseStatus && title">{{ title }}</span>
   </div>
 </template>
 <script>
-import {} from "vue";
+import { inject } from "vue";
 import { useRouter } from "vue-router";
 import logo from "@/assets/logo.png";
 export default {
@@ -13,6 +13,7 @@ export default {
     title: String,
   },
   setup() {
+    const { collapseStatus } = inject("collapse");
     const router = useRouter();
     const backHome = () => {
       router.push("/home");
@@ -22,6 +23,7 @@ export default {
     return {
       backHome,
       logoPath,
+      collapseStatus,
     };
   },
 };
@@ -29,7 +31,7 @@ export default {
 
 <style lang="less" scoped>
 .logo {
-  width: 200px;
+  width: 100%;
   height: 60px;
   display: flex;
   justify-content: center;

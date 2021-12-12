@@ -1,7 +1,7 @@
 import { ref } from "vue";
 
 function collapseHook() {
-  const collapseStatus = ref(true);
+  const collapseStatus = ref(false);
 
   const onCollapseChange = () => {
     collapseStatus.value = !collapseStatus.value;
