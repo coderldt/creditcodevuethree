@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import { toRefs } from "vue";
+import {} from "vue";
 export default {
   props: {
     title: {
@@ -29,7 +29,6 @@ export default {
       emit("onMoreClick");
     };
     return {
-      ...toRefs(props),
       onMoreClick,
     };
   },

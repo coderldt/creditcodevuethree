@@ -8,9 +8,9 @@
         <div class="term">
           <span class="value">{{ item.value }}</span>
           <div class="trend" :style="{ background: colorList[item.type].back }">
-            <el-icon :color="colorList[item.type].color"
-              ><component :is="item.type ? 'bottom' : 'top'"></component
-            ></el-icon>
+            <el-icon :color="colorList[item.type].color">
+              <component :is="item.type ? 'bottom' : 'top'"></component>
+            </el-icon>
             <div class="count" :style="{ color: colorList[item.type].color }">
               {{ item.count }}
             </div>
@@ -18,11 +18,27 @@
         </div>
       </div>
     </div>
+    <div class="typeItem">
+      <el-tabs v-model="tabsActive">
+        <el-tab-pane
+          :label="item.label"
+          :name="item.component"
+          v-for="(item, index) in tabs"
+          :key="index"
+        >
+          <component :is="item.component"></component>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
   </CommonBox>
 </template>
 <script>
 import { ref } from "vue";
+import Model from "./children";
 export default {
+  components: {
+    ...Model,
+  },
   setup() {
     // 0 下降 1 上升
     const list = ref([
@@ -43,9 +59,20 @@ export default {
       },
     };
 
+    const tabsActive = ref("antiFraudModel");
+    const tabs = [
+      { label: "反欺诈模型", component: "antiFraudModel" },
+      { label: "安检门模型", component: "safetyCheckModel" },
+      { label: "业务风险识别模型", component: "businessRiskModel" },
+      { label: "风险预警模型", component: "rRiskWarningModel" },
+      { label: "主体评分模型", component: "subjectScoreModel" },
+    ];
+
     return {
       list,
       colorList,
+      tabsActive,
+      tabs,
     };
   },
 };
@@ -104,5 +131,9 @@ export default {
   .item:last-child {
     padding-right: 0;
   }
+}
+
+.typeItem {
+  margin-top: 15px;
 }
 </style>

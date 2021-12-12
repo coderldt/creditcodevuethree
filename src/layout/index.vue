@@ -44,7 +44,7 @@ export default {
 }
 
 .el-aside {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fff;
   color: var(--el-text-color-primary);
   text-align: center;
