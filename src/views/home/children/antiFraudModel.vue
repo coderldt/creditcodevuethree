@@ -1,7 +1,7 @@
 <template>
   <div class="antiFraudModel">
     <el-row :gutter="20">
-      <!-- <el-col :span="14">
+      <el-col :span="14">
         <Echarts id="platformRegis" :height="300" :options="platformRegis">
           <el-select
             v-model="platformRegisVal"
@@ -39,7 +39,7 @@
             </el-option>
           </el-select>
         </Echarts>
-      </el-col> -->
+      </el-col>
       <el-col :span="24">
         <div class="title">反欺诈模型运行结果</div>
         <el-form

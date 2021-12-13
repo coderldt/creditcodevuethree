@@ -7,7 +7,32 @@ const menu = [
     icon: "house",
     path: "/",
     id: "1",
-    children: [],
+  },
+  {
+    title: "征信查询",
+    icon: "search",
+    path: "/",
+    id: "2",
+    children: [
+      {
+        title: "企业查询",
+        icon: "",
+        path: "/creditQuery",
+        id: "2-1",
+      },
+      {
+        title: "征信报告",
+        icon: "",
+        path: "/creditQuery1",
+        id: "2-2",
+      },
+      {
+        title: "关系图谱",
+        icon: "",
+        path: "/creditQuery2",
+        id: "2-3",
+      },
+    ],
   },
 ];
 
