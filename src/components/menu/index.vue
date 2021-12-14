@@ -6,7 +6,7 @@ export default defineComponent({
     const baseMenuItem = (props) => {
       return (
         <>
-          <el-icon>{h(resolveComponent(props.icon))}</el-icon>
+          {props.icon && <el-icon>{h(resolveComponent(props.icon))}</el-icon>}
           <span>{props.title}</span>
         </>
       );

@@ -48,7 +48,12 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "linebreak-style": "off"
+      "prettier/prettier": [
+        "error",
+        {
+          "endOfLine": "auto"
+        }
+      ]
     }
   },
   "browserslist": [

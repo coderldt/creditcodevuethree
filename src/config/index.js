@@ -4,13 +4,13 @@ const config = {
 const menu = [
   {
     title: "首页",
-    icon: "house",
+    icon: "House",
     path: "/",
     id: "1",
   },
   {
     title: "征信查询",
-    icon: "search",
+    icon: "Search",
     path: "/",
     id: "2",
     children: [
