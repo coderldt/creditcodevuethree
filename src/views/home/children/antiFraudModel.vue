@@ -332,7 +332,7 @@ export default defineComponent({
   width: 90px;
 }
 
-/deep/ .el-date-editor--daterange.el-input__inner {
+:deep(.el-date-editor--daterange.el-input__inner) {
   width: 100%;
 }
 
