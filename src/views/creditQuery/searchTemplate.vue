@@ -1,7 +1,8 @@
 <template>
   <div class="searchTemplate">
+    <!-- v-model="search" -->
     <el-input
-      v-model="search"
+      v-model="getSearch"
       placeholder="请输入企业名称/统一社会信用代码"
     ></el-input>
     <el-button @click="onSearch" type="primary">查询</el-button>
@@ -16,12 +17,26 @@
   </div>
 </template>
 <script>
-import { defineComponent, inject, toRefs } from "vue";
+import { computed, defineComponent, inject, toRefs } from "vue";
 import { useRouter } from "vue-router";
-import useCreditList from "./useCreditList";
 export default defineComponent({
-  setup() {
-    const { search, onSearch } = toRefs(useCreditList);
+  props: {
+    search: {
+      type: String,
+      default: "",
+    },
+  },
+  emits: ["update:search", "onSearch"],
+  setup(props, { emit }) {
+    const { search } = toRefs(props);
+    const getSearch = computed({
+      get: () => {
+        return search.value;
+      },
+      set: (val) => {
+        emit("update:search", val);
+      },
+    });
 
     const ElMessage = inject("ElMessage");
     const linkItem = [
@@ -39,10 +54,14 @@ export default defineComponent({
       }
     };
 
+    const onSearch = () => {
+      emit("onSearch");
+    };
+
     return {
+      getSearch,
       linkItem,
       onItemClick,
-      search,
       onSearch,
     };
   },
