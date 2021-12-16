@@ -40,6 +40,7 @@ export default {
 <style lang="less" scoped>
 .el-container {
   position: relative;
+  height: 100vh;
 }
 .el-header {
   position: fixed;
@@ -69,6 +70,7 @@ export default {
 .el-main {
   position: absolute;
   right: 0;
+  bottom: 0;
   top: 60px;
   background-color: #f3f6f8;
   color: var(--el-text-color-primary);
