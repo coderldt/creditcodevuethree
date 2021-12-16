@@ -1,98 +1,47 @@
 <template>
-  <div class="companyBase">
-    <div class="title">
-      <div class="name">{{ baseMsg.companyname }}</div>
-      <div class="level">内部评级：{{ baseMsg.level || "--" }}</div>
-    </div>
-    <el-form label-width="140px">
-      <el-row gutter="5">
-        <el-col :span="12">
-          <el-form-item label="统一社会信用代码：">
-            {{ baseMsg.creditCode || tip }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="法定代表人：">
-            {{ baseMsg.legalPerson || tip }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="注册资本：">
-            {{ baseMsg.registeredCapital || tip }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="成立时间：">
-            {{ baseMsg.credteTime || tip }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="电话号码：">
-            {{ baseMsg.phone || tip }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="邮箱：">
-            {{ baseMsg.email || tip }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="企业状态：">
-            {{ baseMsg.companyStatus || tip }}
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="地址：">
-            {{ baseMsg.address || tip }}
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
+  <div class="detailBase">
+    <RadioTag
+      class="tag"
+      :list="tagList"
+      v-model:defaultSelect="defaultSelect"
+    ></RadioTag>
+
+    <!-- <component :is="defaultSelect"></component> -->
+    <BaseBusiness v-show="defaultSelect == 'BaseBusiness'"></BaseBusiness>
+    <BaseLeader v-show="defaultSelect == 'BaseLeader'"></BaseLeader>
   </div>
 </template>
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import RadioTag from "@/components/radioTag/";
+import { BaseBusiness, BaseLeader } from "./index";
 export default defineComponent({
-  props: {
-    baseMsg: {
-      type: Object,
-      default: () => ({}),
-    },
+  components: {
+    RadioTag,
+    BaseBusiness,
+    BaseLeader,
   },
   setup() {
-    const tip = "暂无数据";
+    const tagList = ref([
+      { label: "工商照面信息", key: "BaseBusiness" },
+      { label: "高管", key: "BaseLeader" },
+      { label: "分支机构", key: "2" },
+      { label: "股东及出资", key: "3" },
+      { label: "评级信息", key: "4" },
+      { label: "平台授权信息", key: "5" },
+    ]);
+    const defaultSelect = ref("BaseBusiness");
 
     return {
-      tip,
+      tagList,
+      defaultSelect,
     };
   },
 });
 </script>
 
 <style lang="less" scoped>
-.title {
-  .name {
-    position: relative;
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .level {
-    position: absolute;
-    right: -105px;
-    top: 0;
-    font-size: 10px;
-    padding: 6.5px 10px;
-    background: #eaeaea;
-    box-sizing: border-box;
-    color: #e74c3c;
-    border-radius: 50px;
-  }
-}
-.el-form {
-  width: 800px;
-  .el-form-item {
-    margin-bottom: 0;
-  }
+.tag {
+  margin: 15px 0;
 }
 </style>

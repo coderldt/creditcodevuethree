@@ -20,7 +20,7 @@
         :key="index"
       >
         <div class="content">
-          <BaseMsg :baseMsg="item.detail.baseMsg"></BaseMsg>
+          <CompanyBase :baseMsg="item.detail.baseMsg"></CompanyBase>
           <Detail></Detail>
         </div>
       </el-tab-pane>
@@ -31,12 +31,12 @@
 import { defineComponent, inject, ref } from "vue";
 import { getCreditDetail } from "@/apis/creditQuery.js";
 import SearchTemplate from "./searchTemplate.vue";
-import BaseMsg from "./children/base.vue";
-import Detail from "./children/detail.vue";
+import CompanyBase from "./companyBase.vue";
+import Detail from "./detail.vue";
 export default defineComponent({
   components: {
     SearchTemplate,
-    BaseMsg,
+    CompanyBase,
     Detail,
   },
   setup() {
