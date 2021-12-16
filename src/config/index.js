@@ -23,7 +23,7 @@ const menu = [
       {
         title: "征信报告",
         icon: "",
-        path: "/creditQuery1",
+        path: "/creditReport",
         id: "2-2",
       },
       {

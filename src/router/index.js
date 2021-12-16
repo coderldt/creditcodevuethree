@@ -11,6 +11,11 @@ const routes = [
     name: "creditQuery",
     component: () => import("@/views/creditQuery/index.vue"),
   },
+  {
+    path: "/creditReport",
+    name: "creditReport",
+    component: () => import("@/views/creditReport/index.vue"),
+  },
 ];
 
 const router = createRouter({
