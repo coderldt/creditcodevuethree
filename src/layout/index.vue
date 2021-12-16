@@ -5,8 +5,10 @@
       <Menu></Menu>
     </el-aside>
     <el-container>
-      <el-header><Header></Header></el-header>
-      <el-main>
+      <el-header :style="{ right: 0, left: collapseStatus ? '63px' : '200px' }">
+        <Header></Header>
+      </el-header>
+      <el-main :style="{ left: collapseStatus ? '63px' : '200px' }">
         <router-view></router-view>
       </el-main>
     </el-container>
@@ -36,16 +38,23 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.el-container {
+  position: relative;
+}
 .el-header {
+  position: fixed;
   background-color: #fff;
   color: var(--el-text-color-primary);
   line-height: 60px;
   padding: 0;
   box-shadow: 1px 0 3px #aeadad;
   z-index: 1;
+  transition: all 0.5s;
+  z-index: 999;
 }
 
 .el-aside {
+  position: fixed;
   min-height: 100vh;
   background-color: #fff;
   color: var(--el-text-color-primary);
@@ -54,11 +63,16 @@ export default {
   box-shadow: 2px 0px 5px #e4e2e2;
   z-index: 2;
   transition: width 0.5s;
+  z-index: 999;
 }
 
 .el-main {
+  position: absolute;
+  right: 0;
+  top: 60px;
   background-color: #f3f6f8;
   color: var(--el-text-color-primary);
   padding: 20px;
+  transition: all 0.5s;
 }
 </style>
