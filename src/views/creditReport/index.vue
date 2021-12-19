@@ -7,7 +7,7 @@
       <el-table-column prop="createTime" label="生成时间" align="center" />
       <el-table-column prop="status" label="状态" align="center" />
       <el-table-column prop="address" label="操作" width="180" align="center" />
-      <template v-slot:empty>
+      <template #empty>
         <el-empty description="暂时数据" :image-size="80"></el-empty>
       </template>
     </el-table>
@@ -24,6 +24,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import Search from "./search.vue";
+
 export default defineComponent({
   components: {
     Search,

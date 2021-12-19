@@ -5,16 +5,17 @@
   </div>
 </template>
 <script>
-import {} from "vue";
+import { defineComponent } from "vue";
 import Collapse from "@/components/collapse";
 import My from "@/components/my";
-export default {
+
+export default defineComponent({
   components: {
     Collapse,
     My,
   },
   setup() {},
-};
+});
 </script>
 
 <style lang="less" scoped>

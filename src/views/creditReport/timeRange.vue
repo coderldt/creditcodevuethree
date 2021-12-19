@@ -1,6 +1,6 @@
 <template>
   <div class="timeRange">
-    <span>{{ finalyValue }}</span>
+    <span>{{ finallyValue }}</span>
     <el-button type="text" @click="dialogVisible = true">筛选</el-button>
     <el-dialog v-model="dialogVisible" title="时间范围筛选" width="50%" center>
       <el-tabs tab-position="left" v-model="type" style="height: 200px">
@@ -36,24 +36,33 @@
     </el-dialog>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, ref } from "vue";
+
+export interface SubmitParams {
+  type: string;
+  finallyValue: string;
+}
+
 export default defineComponent({
-  emits: ["onSubmit"],
+  emits: ["submit"],
   setup(props, { emit }) {
     const dialogVisible = ref(false);
-    const finalyValue = ref("");
+    const finallyValue = ref("");
     const timePoint = ref("");
     const timeCustom = ref("");
     const type = ref("timePoint");
 
     const onSubmit = () => {
       if (type.value === "timePoint") {
-        finalyValue.value = `近${timePoint.value}天`;
+        finallyValue.value = `近${timePoint.value}天`;
       } else {
-        finalyValue.value = timeCustom.value;
+        finallyValue.value = timeCustom.value;
       }
-      emit("onSubmit", { type: type.value, finalyValue });
+      emit("submit", {
+        type: type.value,
+        finallyValue: finallyValue.value,
+      });
       dialogVisible.value = false;
     };
     return {
@@ -62,7 +71,7 @@ export default defineComponent({
       timePoint,
       timeCustom,
       onSubmit,
-      finalyValue,
+      finallyValue,
     };
   },
 });

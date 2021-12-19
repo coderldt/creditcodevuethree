@@ -4,7 +4,9 @@
       <div class="item" v-for="(item, index) in list" :key="index">
         <div class="label">
           {{ item.title }}
-          <el-icon size="14"><arrow-right /></el-icon>
+          <el-icon size="14">
+            <arrow-right />
+          </el-icon>
         </div>
         <div class="term">
           <span class="value">{{ item.value }}</span>
@@ -14,10 +16,11 @@
     </div>
   </CommonBox>
 </template>
-<script>
-import {} from "vue";
+<script lang="ts">
+import { defineComponent } from "vue";
 import surprised from "@/assets/img/surprised.png";
-export default {
+
+export default defineComponent({
   setup() {
     const list = [
       { title: "高风险信号", value: 17 },
@@ -32,7 +35,7 @@ export default {
       surprisedImg,
     };
   },
-};
+});
 </script>
 
 <style lang="less" scoped>
@@ -60,6 +63,7 @@ export default {
         font-size: 30px;
         font-weight: 600;
       }
+
       img {
         width: auto;
         height: 100%;
@@ -70,9 +74,11 @@ export default {
   .item:not(:first-child) {
     margin-left: 20px;
   }
+
   .item:not(:last-child) {
     border-right: 1px solid #eaeaea;
   }
+
   .item:last-child {
     padding-right: 0;
   }

@@ -29,10 +29,11 @@
 </template>
 <script>
 import { defineComponent, inject, ref } from "vue";
-import { getCreditDetail } from "@/apis/creditQuery.js";
+import { getCreditDetail } from "@/apis/creditQuery";
 import SearchTemplate from "./searchTemplate.vue";
 import CompanyBase from "./companyBase.vue";
 import Detail from "./detail.vue";
+
 export default defineComponent({
   components: {
     SearchTemplate,
@@ -100,6 +101,7 @@ export default defineComponent({
   :deep(.el-tabs__content) {
     min-height: calc(100% - 65px);
   }
+
   .query {
     position: absolute;
     top: 50%;

@@ -32,10 +32,11 @@
     </div>
   </CommonBox>
 </template>
-<script>
-import { ref } from "vue";
+<script lang="ts">
+import { ref, defineComponent } from "vue";
 import Model from "./children";
-export default {
+
+export default defineComponent({
   components: {
     ...Model,
   },
@@ -75,7 +76,7 @@ export default {
       tabs,
     };
   },
-};
+});
 </script>
 
 <style lang="less" scoped>
@@ -125,9 +126,11 @@ export default {
   .item:not(:first-child) {
     margin-left: 20px;
   }
+
   .item:not(:last-child) {
     border-right: 1px solid #eaeaea;
   }
+
   .item:last-child {
     padding-right: 0;
   }

@@ -1,5 +1,7 @@
 // import { createStore } from "vuex";
 
+import { StoreOptions } from "vuex";
+
 export default {
   namespaced: true,
   state: {
@@ -15,4 +17,4 @@ export default {
       commit("onCollapseChange");
     },
   },
-};
+} as StoreOptions<any>;

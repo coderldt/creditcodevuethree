@@ -15,12 +15,13 @@
   </el-container>
 </template>
 <script>
-import { inject } from "vue";
+import { inject, defineComponent } from "vue";
 import Logo from "@/components/logo";
 import Header from "./header.vue";
 import Menu from "@/components/menu";
-import { config } from "@/config/";
-export default {
+import { config } from "@/config";
+
+export default defineComponent({
   setup() {
     const configData = config;
     const { collapseStatus } = inject("collapse");
@@ -34,7 +35,7 @@ export default {
     Logo,
     Menu,
   },
-};
+});
 </script>
 
 <style lang="less" scoped>
@@ -42,6 +43,7 @@ export default {
   position: relative;
   height: 100vh;
 }
+
 .el-header {
   position: fixed;
   background-color: #fff;
@@ -49,7 +51,6 @@ export default {
   line-height: 60px;
   padding: 0;
   box-shadow: 1px 0 3px #aeadad;
-  z-index: 1;
   transition: all 0.5s;
   z-index: 999;
 }
@@ -61,8 +62,7 @@ export default {
   color: var(--el-text-color-primary);
   text-align: center;
   line-height: 200px;
-  box-shadow: 2px 0px 5px #e4e2e2;
-  z-index: 2;
+  box-shadow: 2px 0 5px #e4e2e2;
   transition: width 0.5s;
   z-index: 999;
 }

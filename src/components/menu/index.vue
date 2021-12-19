@@ -1,9 +1,19 @@
-<script>
-import { defineComponent, resolveComponent, h, inject } from "vue";
-import { menu } from "@/config/";
+<script lang="tsx">
+import { defineComponent, resolveComponent, h, inject, ref } from "vue";
+import { menu } from "@/config";
+import { collapseKey } from "@/types/symbol";
+
+interface Menu {
+  children?: Array<Menu>;
+  icon: string;
+  title: string;
+  path: string;
+  id: string;
+}
+
 export default defineComponent({
   setup() {
-    const baseMenuItem = (props) => {
+    const baseMenuItem = (props: { icon: string; title: string }) => {
       return (
         <>
           {props.icon && <el-icon>{h(resolveComponent(props.icon))}</el-icon>}
@@ -12,8 +22,8 @@ export default defineComponent({
       );
     };
 
-    const createItem = (item) => {
-      return item.map((i) => {
+    const createItem = (menu: Array<Menu>) => {
+      return menu.map((i) => {
         if (i.children && i.children.length > 0) {
           return (
             <el-sub-menu index={i.path}>
@@ -29,7 +39,10 @@ export default defineComponent({
       });
     };
 
-    const { collapseStatus } = inject("collapse");
+    const { collapseStatus } = inject(collapseKey, {
+      collapseStatus: ref(false),
+      onCollapseChange: () => {},
+    });
     return () => {
       return (
         <el-menu
@@ -45,5 +58,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="less" scoped></style>

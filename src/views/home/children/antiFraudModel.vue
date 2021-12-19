@@ -114,7 +114,13 @@
 </template>
 <script>
 import { defineComponent, ref, watch, inject, reactive } from "vue";
+import Echarts from "@/components/globalCom/echarts";
+import { ElForm } from "element-plus";
+
 export default defineComponent({
+  components: {
+    Echarts,
+  },
   setup() {
     const ElMessage = inject("ElMessage");
 
@@ -267,7 +273,7 @@ export default defineComponent({
       ],
     });
 
-    const formSearch = ref(null);
+    const formSearch = ref < ElForm > null;
     const formResetFields = () => {
       formSearch.value.resetFields();
     };

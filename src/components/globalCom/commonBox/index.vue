@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import {} from "vue";
-export default {
+import { defineComponent } from "vue";
+export default defineComponent({
   props: {
     title: {
       type: String,
@@ -32,7 +32,7 @@ export default {
       onMoreClick,
     };
   },
-};
+});
 </script>
 
 <style lang="less">

@@ -12,18 +12,19 @@
         <el-input v-model="form.companyName"></el-input>
       </el-form-item>
       <el-form-item label="时间范围：" prop="region">
-        <TimeRange @onSubmit="onSubmit"></TimeRange>
+        <TimeRange @submit="onSubmit"></TimeRange>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSearch"> 搜索 </el-button>
-        <el-button @click="onReset"> 重置 </el-button>
+        <el-button type="primary" @click="onSearch"> 搜索</el-button>
+        <el-button @click="onReset"> 重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
-import TimeRange from "./timeRange.vue";
+import TimeRange, { SubmitParams } from "./timeRange.vue";
+
 export default defineComponent({
   components: {
     TimeRange,
@@ -48,8 +49,8 @@ export default defineComponent({
       form.time = "";
     };
 
-    const onSubmit = ({ finalyValue }) => {
-      form.time = finalyValue;
+    const onSubmit = ({ finallyValue }: SubmitParams) => {
+      form.time = finallyValue;
     };
 
     const onSearch = () => {

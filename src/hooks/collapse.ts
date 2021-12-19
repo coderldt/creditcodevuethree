@@ -1,6 +1,11 @@
-import { ref } from "vue";
+import { ref, Ref } from "vue";
 
-function collapseHook() {
+export interface Collapse {
+  collapseStatus: Ref<boolean>;
+  onCollapseChange: () => void;
+}
+
+function collapseHook(): Collapse {
   const collapseStatus = ref(false);
 
   const onCollapseChange = () => {
