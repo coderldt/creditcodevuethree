@@ -1,6 +1,5 @@
 <template>
   <Layout />
-  <el-menu
 </template>
 
 <script lang="ts">
