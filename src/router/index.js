@@ -16,6 +16,11 @@ const routes = [
     name: "creditReport",
     component: () => import("@/views/creditReport/index.vue"),
   },
+  {
+    path: "/relationship",
+    name: "relationship",
+    component: () => import("@/views/relationship/index.vue"),
+  },
 ];
 
 const router = createRouter({

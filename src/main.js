@@ -15,6 +15,5 @@ app.use(ElementPlus, {
   locale: zhCn,
 });
 
-app.use(ElementPlus);
 globalCommonComponents(app);
 app.use(store).use(router).mount("#app");

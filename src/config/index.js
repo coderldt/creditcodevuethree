@@ -29,7 +29,7 @@ const menu = [
       {
         title: "关系图谱",
         icon: "",
-        path: "/creditQuery2",
+        path: "/relationship",
         id: "2-3",
       },
     ],
