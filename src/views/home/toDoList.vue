@@ -14,12 +14,18 @@
     </div>
   </CommonBox>
 </template>
-<script>
-import {} from "vue";
+<script lang="ts" >
+import {defineComponent} from "vue";
 import surprised from "@/assets/img/surprised.png";
-export default {
+
+interface list {
+  title: string,
+  value: number
+}
+
+export default defineComponent({
   setup() {
-    const list = [
+    const list: Array<list> = [
       { title: "高风险信号", value: 17 },
       { title: "中风险信号", value: 0 },
       { title: "低风险信号", value: 256 },
@@ -32,7 +38,7 @@ export default {
       surprisedImg,
     };
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

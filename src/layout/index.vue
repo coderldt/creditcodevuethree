@@ -1,32 +1,38 @@
 <template>
   <el-container>
-    <el-aside :width="collapseStatus ? '63px' : '200px'">
+    <el-aside :width="getCommonWidth">
       <Logo :title="configData.title"></Logo>
       <Menu></Menu>
     </el-aside>
     <el-container>
-      <el-header :style="{ right: 0, left: collapseStatus ? '63px' : '200px' }">
+      <el-header :style="{ right: 0, left: getCommonWidth }">
         <Header></Header>
       </el-header>
-      <el-main :style="{ left: collapseStatus ? '63px' : '200px' }">
+      <el-main :style="{ left: getCommonWidth }">
         <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
 </template>
 <script>
-import { inject } from "vue";
+import { computed, inject } from "vue";
 import Logo from "@/components/logo";
 import Header from "./header.vue";
 import Menu from "@/components/menu";
-import { config } from "@/config/";
+import { config } from "@/config";
 export default {
   setup() {
     const configData = config;
     const { collapseStatus } = inject("collapse");
+
+    const getCommonWidth = computed(() => {
+      return collapseStatus.value ? '63px' : '200px'
+    })
+    
     return {
       configData,
       collapseStatus,
+      getCommonWidth
     };
   },
   components: {

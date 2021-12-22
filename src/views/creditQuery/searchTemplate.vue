@@ -18,6 +18,7 @@
 </template>
 <script>
 import { computed, defineComponent, inject, toRefs } from "vue";
+import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 export default defineComponent({
   props: {
@@ -38,7 +39,6 @@ export default defineComponent({
       },
     });
 
-    const ElMessage = inject("ElMessage");
     const linkItem = [
       { label: "查报告", icon: "calendar", link: "/" },
       { label: "查关系", icon: "connection", link: "" },

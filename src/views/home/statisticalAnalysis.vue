@@ -32,16 +32,33 @@
     </div>
   </CommonBox>
 </template>
-<script>
-import { ref } from "vue";
+<script lang="ts" >
+import { ref, defineComponent, Ref } from "vue";
 import Model from "./children";
-export default {
+
+interface List {
+  title: string,
+  value: number,
+  type: number,
+  count: number,
+}
+
+interface Color {
+  back: string,
+  color: string,
+}
+
+interface Tab {
+  label: string,
+  component: string,
+}
+export default defineComponent({
   components: {
     ...Model,
   },
   setup() {
     // 0 下降 1 上升
-    const list = ref([
+    const list: Ref<List[]> = ref([
       { title: "平台注册企业数量", value: 17, type: 0, count: 5 },
       { title: "已过门资产数量", value: 0, type: 1, count: 20 },
       { title: "已尽调资产数量", value: 256, type: 0, count: 5 },
@@ -59,8 +76,8 @@ export default {
       },
     };
 
-    const tabsActive = ref("antiFraudModel");
-    const tabs = [
+    const tabsActive: Ref<string> = ref("antiFraudModel");
+    const tabs: Tab[] = [
       { label: "反欺诈模型", component: "antiFraudModel" },
       { label: "安检门模型", component: "safetyCheckModel" },
       { label: "业务风险识别模型", component: "businessRiskModel" },
@@ -75,7 +92,7 @@ export default {
       tabs,
     };
   },
-};
+});
 </script>
 
 <style lang="less" scoped>

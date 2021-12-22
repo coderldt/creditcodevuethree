@@ -112,21 +112,45 @@
     </el-row>
   </div>
 </template>
-<script>
-import { defineComponent, ref, watch, inject, reactive } from "vue";
+<script lang="ts" >
+import { ElMessage } from "element-plus";
+import { ElForm } from 'element-plus';
+import { defineComponent, ref, watch, reactive } from "vue";
+
+interface TimeOptions {
+  label: string,
+  value: string
+}
+
+interface Form {
+  enterpriseMame: string,
+  hitRule: string,
+  callTime: string,
+}
+
+interface List {
+  enterpriseMame: string,
+  hitRule: string,
+  callTime: string,
+}
+
+interface Pagination {
+  total: number,
+  page: number,
+  pageSize: number
+}
+
 export default defineComponent({
   setup() {
-    const ElMessage = inject("ElMessage");
-
-    const selectTimes = ref([
-      { label: "七天", value: "7" },
+    const selectTimes: Array<TimeOptions> = reactive([
+      { label: "七天", value: "7", age: 100 },
       { label: "一月", value: "30" },
       { label: "三月", value: "120" },
       { label: "半年", value: "186" },
       { label: "一年", value: "365" },
     ]);
 
-    const platformRegisVal = ref("7");
+    const platformRegisVal = ref<string>("7");
     const getPlatformRegis = () => {
       ElMessage.success("数据加载成功");
     };
@@ -189,7 +213,7 @@ export default defineComponent({
       ],
     };
 
-    const antiFraudTimeVal = ref("7");
+    const antiFraudTimeVal = ref<string>("7");
     const getantiFraud = () => {
       ElMessage.success("数据加载成功");
     };
@@ -246,7 +270,7 @@ export default defineComponent({
     };
 
     // 表单搜索
-    const form = reactive({
+    const form = reactive<Form>({
       enterpriseMame: "1",
       hitRule: "all",
       callTime: "",
@@ -267,7 +291,7 @@ export default defineComponent({
       ],
     });
 
-    const formSearch = ref(null);
+    const formSearch = ref(ElForm);
     const formResetFields = () => {
       formSearch.value.resetFields();
     };
@@ -280,8 +304,8 @@ export default defineComponent({
       }
     };
 
-    const list = ref([]);
-    const pagination = reactive({
+    const list = ref<List[]>([]);
+    const pagination = reactive<Pagination>({
       total: 88,
       page: 1,
       pageSize: 10,

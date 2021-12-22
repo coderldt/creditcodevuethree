@@ -1,7 +1,11 @@
 import { createStore } from "vuex";
 import common from "./children/common";
 
-export default createStore({
+interface State {
+  data: number;
+}
+
+export default createStore<State>({
   state: {
     data: 123,
   },

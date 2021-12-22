@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import ToDoList from "./toDoList.vue";
 import Tips from "./tips.vue";
 import StatisticalAnalysis from "./statisticalAnalysis.vue";

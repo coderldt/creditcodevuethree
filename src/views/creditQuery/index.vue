@@ -29,6 +29,7 @@
 </template>
 <script>
 import { defineComponent, inject, ref } from "vue";
+import { ElMessage } from "element-plus";
 import { getCreditDetail } from "@/apis/creditQuery.js";
 import SearchTemplate from "./searchTemplate.vue";
 import CompanyBase from "./companyBase.vue";
@@ -40,7 +41,6 @@ export default defineComponent({
     Detail,
   },
   setup() {
-    const ElMessage = inject("ElMessage");
     const search = ref("");
 
     const list = ref([]);

@@ -1,20 +1,25 @@
 <template>
   <Layout></Layout>
 </template>
-<script>
-import { provide } from "vue";
-import Layout from "@/layout";
+<script lang="ts">
+import { provide, defineComponent, ref } from "vue";
+import Layout from "@/layout/invue.vue";
 import collapseHook from "@/hooks/collapse";
-import { ElMessage } from "element-plus";
-import { setStore } from "@/utils/store.js";
-export default {
+import { setStore } from "@/utils/store";
+
+interface UserInfo {
+  name: string,
+  age?: number
+}
+
+export default defineComponent({
   components: {
     Layout,
   },
   setup() {
-    setStore("userInfo", { name: "coderlt" });
+    const userInfo: UserInfo = { name: "coderlt" }
+    setStore("userInfo", userInfo);
     provide("collapse", collapseHook());
-    provide("ElMessage", ElMessage);
   },
-};
+});
 </script>

@@ -1,7 +1,20 @@
-const config = {
+interface config {
+  title: string
+}
+
+interface Menu {
+  title: string,
+  icon: string,
+  path?: string,
+  id: string,
+  children?: Array<Menu>
+}
+
+const config: config = {
   title: "我的征信",
 };
-const menu = [
+
+const menu: Array<Menu> = [
   {
     title: "首页",
     icon: "House",
