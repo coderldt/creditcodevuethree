@@ -12,7 +12,7 @@ import globalCommonComponents from "@/components/globalCom/";
 
 const app = createApp(App);
 app.use(ElementPlus, {
-  locale: zhCn,
+  locale: zhCn
 });
 
 globalCommonComponents(app);

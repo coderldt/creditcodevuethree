@@ -12,7 +12,13 @@ import HelloWorld from "@/components/HelloWorld.vue";
 export default defineComponent({
   name: "Home",
   components: {
-    HelloWorld,
-  },
+    HelloWorld
+  }
 });
 </script>
+
+<style scoped>
+h1 {
+  color: black;
+}
+</style>

@@ -8,18 +8,20 @@ import collapseHook from "@/hooks/collapse";
 import { setStore } from "@/utils/store";
 
 interface UserInfo {
-  name: string,
-  age?: number
+  name: string;
+  age?: number;
 }
 
 export default defineComponent({
   components: {
-    Layout,
+    Layout
   },
   setup() {
-    const userInfo: UserInfo = { name: "coderlt" }
+    const userInfo: UserInfo = { name: "coderlt" };
     setStore("userInfo", userInfo);
     provide("collapse", collapseHook());
-  },
+
+    const a = 1;
+  }
 });
 </script>

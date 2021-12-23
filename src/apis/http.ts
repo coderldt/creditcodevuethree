@@ -4,25 +4,25 @@ import router from "@/router/index";
 import { getStore } from "@/utils/store";
 
 interface HttpHeaders {
-  token?: string,
-  [propertys:string]: any
+  token?: string;
+  [propertys: string]: any;
 }
 
 interface Params {
-  url: string,
-  headers?: HttpHeaders,
-  data?: object,
-  method?: "GET" | "POST",
-  params?: object | null
+  url: string;
+  headers?: HttpHeaders;
+  data?: {};
+  method?: "GET" | "POST";
+  params?: {} | null;
 }
 
 const ajax: AxiosInstance = axios.create({
-  baseURL: "/", 
+  baseURL: "/",
   headers: {
     "Content-Type": "application/json;charset=UTF-8",
-    "Accept": "application/json;charset=UTF-8",
-  },
-})
+    Accept: "application/json;charset=UTF-8"
+  }
+});
 
 // 请求拦截器，内部根据返回值，重新组装，统一管理。
 axios.interceptors.response.use((res) => {
@@ -44,7 +44,7 @@ axios.interceptors.response.use((res) => {
 
 const http = {
   get: function (params: Params) {
-    const { data = {}, url, headers = {} } = params
+    const { data = {}, url, headers = {} } = params;
     let query = "";
     Object.entries(data).forEach(([key, value]) => {
       query += `${key}=${value}&`;
@@ -57,20 +57,20 @@ const http = {
     return this.http({ url: `${url}?${query}`, headers });
   },
   post: function (params: Params) {
-    const { data = {}, url, headers = {} } = params
+    const { data = {}, url, headers = {} } = params;
     return this.http({ method: "POST", url, headers, data });
   },
   http: (param: Params): AxiosPromise<object> => {
-    const { method = "GET", url, data, headers = {}, params } = param
+    const { method = "GET", url, data, headers = {}, params } = param;
     return new Promise((resolve, reject) => {
-      headers['token'] = getStore('token') || ''
+      headers["token"] = getStore("token") || "";
       return ajax
         .request({
           method,
           url,
           data,
           headers,
-          params,
+          params
         })
         .then(
           (res) => {
@@ -82,7 +82,7 @@ const http = {
           }
         );
     });
-  },
+  }
 };
 
 export default http;

@@ -1,7 +1,7 @@
 <template>
   <div class="relation">
     relationship
-    <MapFilter @getData="getData"></MapFilter>
+    <MapFilter @getData="getData" />
   </div>
 </template>
 <script lang="ts">

@@ -1,4 +1,4 @@
-function getStore(key: string) {
+function getStore(key: string): any {
   const value = window.localStorage.getItem(key);
   if (value) {
     return JSON.parse(value);
@@ -7,7 +7,7 @@ function getStore(key: string) {
   }
 }
 
-function setStore(key: string, value: any) {
+function setStore(key: string, value: any): void {
   if (key && value) {
     window.localStorage.setItem(key, JSON.stringify(value));
   }

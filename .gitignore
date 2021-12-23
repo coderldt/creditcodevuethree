@@ -3,7 +3,6 @@ node_modules
 /dist
 
 dist.zip
-yarn.lock
 upload/
 
 # local env files
