@@ -114,8 +114,8 @@
 </template>
 <script lang="ts" >
 import { ElMessage } from "element-plus";
-import { ElForm } from 'element-plus';
-import { defineComponent, ref, watch, reactive } from "vue";
+import { ElForm, ElFormContext } from 'element-plus';
+import { defineComponent, ref, watch, reactive, Ref } from "vue";
 
 interface TimeOptions {
   label: string,
@@ -150,7 +150,7 @@ export default defineComponent({
       { label: "一年", value: "365" },
     ]);
 
-    const platformRegisVal = ref<string>("7");
+    const platformRegisVal: Ref<string> = ref("7");
     const getPlatformRegis = () => {
       ElMessage.success("数据加载成功");
     };
@@ -213,7 +213,7 @@ export default defineComponent({
       ],
     };
 
-    const antiFraudTimeVal = ref<string>("7");
+    const antiFraudTimeVal: Ref<string> = ref("7");
     const getantiFraud = () => {
       ElMessage.success("数据加载成功");
     };
@@ -270,7 +270,7 @@ export default defineComponent({
     };
 
     // 表单搜索
-    const form = reactive<Form>({
+    const form: Form = reactive({
       enterpriseMame: "1",
       hitRule: "all",
       callTime: "",
@@ -291,13 +291,14 @@ export default defineComponent({
       ],
     });
 
-    const formSearch = ref(ElForm);
+    const formSearch = ref<InstanceType<typeof ElForm>>();
+    formSearch.value
     const formResetFields = () => {
-      formSearch.value.resetFields();
+      formSearch.value?.resetFields();
     };
 
     const onSubmit = async () => {
-      const valid = await formSearch.value.validate();
+      const valid = await formSearch.value?.validate();
       if (valid) {
         getList();
         console.log(111, form);

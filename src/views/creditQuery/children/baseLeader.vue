@@ -8,11 +8,17 @@
     </el-table>
   </div>
 </template>
-<script>
-import { defineComponent, ref } from "vue";
+<script lang="ts">
+import { defineComponent, Ref, ref } from "vue";
+
+interface Table {
+  name: string,
+  role: string,
+}
+
 export default defineComponent({
   setup() {
-    const table = ref([
+    const table: Ref<Table[]> = ref([
       {
         name: "Tom",
         role: "CEO",

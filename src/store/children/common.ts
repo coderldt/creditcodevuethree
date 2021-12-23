@@ -1,17 +1,14 @@
-// import { createStore } from "vuex";
+import { InjectionKey } from "vue";
+import { Module, Store, useStore as baseUseStore } from "vuex";
+import { CommonState, RootState } from "../../types/store"
 
-import { useStore } from 'vuex';
-const state: useStore = {
-  isLogin: true,
-};
-
-export default {
+const common: Module<CommonState, RootState> = {
   namespaced: true,
   state: {
     collapse: true,
   },
   mutations: {
-    onCollapseChange(state: useState): void {
+    onCollapseChange(state) {
       state.collapse = !state.collapse;
     },
   },
@@ -20,4 +17,12 @@ export default {
       commit("onCollapseChange");
     },
   },
-};
+}
+
+const key: InjectionKey<Store<RootState>> = Symbol()
+
+export function useStore() {
+  return baseUseStore(key)
+}
+
+export default common

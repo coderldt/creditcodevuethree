@@ -11,10 +11,17 @@
     <BaseLeader v-show="defaultSelect == 'BaseLeader'"></BaseLeader>
   </div>
 </template>
-<script>
-import { defineComponent, ref } from "vue";
-import RadioTag from "@/components/radioTag/";
+
+<script lang="ts">
+import { defineComponent, Ref, ref } from "vue";
+import RadioTag from "@/components/radioTag/index.vue";
 import { BaseBusiness, BaseLeader } from "./index";
+
+interface TagList {
+  label: string;
+  key: string;
+}
+
 export default defineComponent({
   components: {
     RadioTag,
@@ -22,7 +29,7 @@ export default defineComponent({
     BaseLeader,
   },
   setup() {
-    const tagList = ref([
+    const tagList: Ref<TagList[]> = ref([
       { label: "工商照面信息", key: "BaseBusiness" },
       { label: "高管", key: "BaseLeader" },
       { label: "分支机构", key: "2" },
@@ -30,7 +37,7 @@ export default defineComponent({
       { label: "评级信息", key: "4" },
       { label: "平台授权信息", key: "5" },
     ]);
-    const defaultSelect = ref("BaseBusiness");
+    const defaultSelect: Ref<string> = ref("BaseBusiness");
 
     return {
       tagList,

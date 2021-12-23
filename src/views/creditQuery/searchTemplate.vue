@@ -16,10 +16,17 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { computed, defineComponent, inject, toRefs } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+
+interface Item {
+  label: string,
+  icon: string,
+  link: string,
+}
+
 export default defineComponent({
   props: {
     search: {
@@ -39,14 +46,14 @@ export default defineComponent({
       },
     });
 
-    const linkItem = [
+    const linkItem: Item[] = [
       { label: "查报告", icon: "calendar", link: "/" },
       { label: "查关系", icon: "connection", link: "" },
       { label: "查风险", icon: "bell-filled", link: "" },
     ];
 
     const router = useRouter();
-    const onItemClick = (item) => {
+    const onItemClick = (item: Item) => {
       if (item.link) {
         router.push(item.link);
       } else {

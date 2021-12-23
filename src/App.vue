@@ -3,7 +3,7 @@
 </template>
 <script lang="ts">
 import { provide, defineComponent, ref } from "vue";
-import Layout from "@/layout/invue.vue";
+import Layout from "@/layout/index.vue";
 import collapseHook from "@/hooks/collapse";
 import { setStore } from "@/utils/store";
 

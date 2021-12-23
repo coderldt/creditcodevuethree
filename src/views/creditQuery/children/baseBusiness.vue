@@ -12,16 +12,23 @@
     </List>
   </div>
 </template>
-<script>
-import { defineComponent, ref } from "vue";
+<script lang="ts">
+import { defineComponent, Ref, ref } from "vue";
 import { List, ListItem } from "@/components/list/";
+
+interface List {
+  label: string,
+  value: string,
+  col: number
+}
+
 export default defineComponent({
   components: {
     List,
     ListItem,
   },
   setup() {
-    const list = ref([
+    const list: Ref<List[]> = ref([
       { label: "公司名称", value: "蚂蚁科技集团股份有限公司", col: 12 },
       { label: "法人", value: "井贤栋", col: 12 },
       {

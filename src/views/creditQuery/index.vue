@@ -27,13 +27,26 @@
     </el-tabs>
   </div>
 </template>
-<script>
-import { defineComponent, inject, ref } from "vue";
+<script lang="ts">
+import { defineComponent, Ref, ref } from "vue";
 import { ElMessage } from "element-plus";
-import { getCreditDetail } from "@/apis/creditQuery.js";
+import { getCreditDetail } from "@/apis/creditQuery";
 import SearchTemplate from "./searchTemplate.vue";
 import CompanyBase from "./companyBase.vue";
 import Detail from "./detail.vue";
+
+interface Tabs {
+  title: string,
+  id: number | string,
+  value: number,
+  detail: object
+}
+
+interface DetailApiParams {
+  name: string,
+  age: number
+}
+
 export default defineComponent({
   components: {
     SearchTemplate,
@@ -41,9 +54,9 @@ export default defineComponent({
     Detail,
   },
   setup() {
-    const search = ref("");
+    const search: Ref<string> = ref("");
 
-    const list = ref([]);
+    const list: Ref<Tabs[]> = ref([]);
 
     const onSearch = async () => {
       if (!search.value) {
@@ -62,8 +75,9 @@ export default defineComponent({
       }
     };
 
-    const beforeTabClick = async (activeName) => {
-      const res = await getCreditDetail({ name: activeName });
+    const beforeTabClick = async (activeName: string) => {
+      const detailApiParams: DetailApiParams = { name: '111', age: 100 }
+      const res = await getCreditDetail(detailApiParams);
       if (res) {
         console.log(res);
         const obj = list.value.find((i) => i.title === activeName);
@@ -74,7 +88,7 @@ export default defineComponent({
       return true;
     };
 
-    const onTabRemove = (name) => {
+    const onTabRemove = (name: string) => {
       list.value = list.value.filter((i) => i.title !== name);
     };
 

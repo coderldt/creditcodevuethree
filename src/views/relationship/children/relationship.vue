@@ -4,7 +4,7 @@
     <MapFilter @getData="getData"></MapFilter>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, inject } from "vue";
 import { ElMessage } from "element-plus";
 import MapFilter from "./mapFilter.vue";

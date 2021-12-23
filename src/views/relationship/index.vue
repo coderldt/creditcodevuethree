@@ -20,15 +20,21 @@
     </div>
   </div>
 </template>
-<script>
-import { defineComponent, provide, ref } from "vue";
-import relationship from "./children/relationship";
-import equityInvestment from "./children/equityInvestment";
-import actualController from "./children/actualController";
-import ultimateBeneficiary from "./children/ultimateBeneficiary";
-import outboundInvestment from "./children/outboundInvestment";
-import workAbroad from "./children/workAbroad";
-import supply from "./children/supply";
+<script lang="ts">
+import { defineComponent, provide, Ref, ref } from "vue";
+import relationship from "./children/relationship.vue";
+import equityInvestment from "./children/equityInvestment.vue";
+import actualController from "./children/actualController.vue";
+import ultimateBeneficiary from "./children/ultimateBeneficiary.vue";
+import outboundInvestment from "./children/outboundInvestment.vue";
+import workAbroad from "./children/workAbroad.vue";
+import supply from "./children/supply.vue";
+
+interface TabList {
+  label: string,
+  name: string
+}
+
 export default defineComponent({
   components: {
     relationship,
@@ -40,10 +46,10 @@ export default defineComponent({
     supply,
   },
   setup() {
-    const activeName = ref("relationship");
+    const activeName: Ref<string> = ref("relationship");
     provide("activeTab", activeName);
 
-    const tabs = ref([
+    const tabs: Ref<TabList[]> = ref([
       { label: "关系图谱", name: "relationship" },
       { label: "对外股权投资", name: "equityInvestment" },
       { label: "实际控制人", name: "actualController" },

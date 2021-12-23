@@ -1,5 +1,9 @@
 import http from "./http";
 
-export function getCreditDetail(params) {
+interface CreditQuery {
+  name: string
+}
+
+export function getCreditDetail(params: CreditQuery) {
   return http.get({ url: "/data/creditQuery.json", data: params });
 }

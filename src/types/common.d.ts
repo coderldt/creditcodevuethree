@@ -1,5 +1,1 @@
-interface Pagination {
-  total: number,
-  page: number,
-  pageSize: number
-}
+declare module "lodash.debounce"

@@ -36,16 +36,16 @@
     </el-dialog>
   </div>
 </template>
-<script>
-import { defineComponent, ref } from "vue";
+<script lang="ts">
+import { defineComponent, Ref, ref } from "vue";
 export default defineComponent({
   emits: ["onSubmit"],
   setup(props, { emit }) {
-    const dialogVisible = ref(false);
-    const finalyValue = ref("");
-    const timePoint = ref("");
-    const timeCustom = ref("");
-    const type = ref("timePoint");
+    const dialogVisible: Ref<boolean> = ref(false);
+    const finalyValue: Ref<(string | string[])> = ref("");
+    const timePoint: Ref<string> = ref("");
+    const timeCustom: Ref<string[]>= ref([]);
+    const type: Ref<string> = ref("timePoint");
 
     const onSubmit = () => {
       if (type.value === "timePoint") {

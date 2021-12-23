@@ -8,15 +8,15 @@
     </el-tabs>
   </div>
 </template>
-<script>
-import { defineComponent, ref } from "vue";
+<script lang="ts">
+import { defineComponent, Ref, ref } from "vue";
 import Base from "./children/base.vue";
 export default defineComponent({
   components: {
     Base,
   },
   setup() {
-    const currentTab = ref("1");
+    const currentTab: Ref<string> = ref("1");
 
     return {
       currentTab,

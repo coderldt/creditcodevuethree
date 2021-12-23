@@ -1,13 +1,13 @@
 <template>
   <div class="rRiskWarningModel">rRiskWarningModel</div>
 </template>
-<script>
-import {} from "vue";
-export default {
+<script lang="ts">
+import {defineComponent} from "vue";
+export default defineComponent({
   setup() {
     console.log("rRiskWarningModel");
   },
-};
+});
 </script>
 
 <style lang="less" scoped></style>

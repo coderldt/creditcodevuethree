@@ -50,7 +50,8 @@
     </el-form>
   </div>
 </template>
-<script>
+
+<script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
@@ -60,7 +61,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const tip = "暂无数据";
+    const tip: string = "暂无数据";
 
     return {
       tip,

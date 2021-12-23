@@ -16,9 +16,9 @@
 </template>
 <script>
 import { computed, inject } from "vue";
-import Logo from "@/components/logo";
+import Logo from "@/components/logo/index.vue";
 import Header from "./header.vue";
-import Menu from "@/components/menu";
+import Menu from "@/components/menu/index.vue";
 import { config } from "@/config";
 export default {
   setup() {

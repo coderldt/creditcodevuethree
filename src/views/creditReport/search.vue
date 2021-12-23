@@ -21,18 +21,28 @@
     </el-form>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import TimeRange from "./timeRange.vue";
+
+interface Form {
+  companyName: string,
+  time: string | string[],
+}
+
+interface SubmitParams {
+  time?: string,
+  finalyValue: string | string[]
+}
+
 export default defineComponent({
   components: {
     TimeRange,
   },
   setup() {
-    const form = reactive({
+    const form: Form = reactive({
       companyName: "",
       time: "",
-      datePicker: [],
     });
 
     const timeOption = ref([
@@ -48,7 +58,7 @@ export default defineComponent({
       form.time = "";
     };
 
-    const onSubmit = ({ finalyValue }) => {
+    const onSubmit = ({ finalyValue }: SubmitParams) => {
       form.time = finalyValue;
     };
 

@@ -21,17 +21,25 @@
     </el-pagination>
   </div>
 </template>
-<script>
-import { defineComponent, ref } from "vue";
+<script lang="ts">
+import { defineComponent, Ref, ref } from "vue";
 import Search from "./search.vue";
+
+interface List {
+  name: string,
+  createTime: string,
+  status: number,
+  address: string
+}
+
 export default defineComponent({
   components: {
     Search,
   },
   setup() {
-    const list = ref();
+    const list: Ref<List[]> = ref([]);
 
-    const currentPage = ref(0);
+    const currentPage: Ref<number> = ref(0);
     const handleCurrentChange = () => {};
     return {
       list,

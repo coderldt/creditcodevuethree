@@ -49,13 +49,31 @@
     </div>
   </div>
 </template>
-<script>
-import { computed, defineComponent, ref, watch } from "vue";
+<script lang="ts">
+import { computed, defineComponent, reactive, Ref, ref, watch } from "vue";
 import debounce from "lodash.debounce";
+
+interface BaseList {
+  label: string,
+  value: string
+}
+
+interface TopologicalList {
+  label: string,
+  value: number
+}
+
+interface From {
+  topologicalValue: number,
+  investmentValue: string,
+  sign: string,
+  signValue: number,
+}
+
 export default defineComponent({
   emits: ["getData"],
   setup(props, { emit }) {
-    const isOpen = ref(false);
+    const isOpen: Ref<Boolean> = ref(false);
 
     const getWidth = computed(() => {
       return `${isOpen.value ? "200px" : "24px"}`;
@@ -65,7 +83,7 @@ export default defineComponent({
       isOpen.value = !isOpen.value;
     };
 
-    const form = ref({
+    const form: From = reactive({
       topologicalValue: 1,
       investmentValue: "investment",
       sign: ">=",
@@ -73,13 +91,13 @@ export default defineComponent({
     });
 
     const onSignValueChange = debounce(() => {
-      emit("getData", form.value);
+      emit("getData", form);
     }, 500);
-    watch(form.value, () => {
+    watch(form, () => {
       onSignValueChange();
     });
 
-    const topological = ref([
+    const topological: Ref<TopologicalList[]> = ref([
       { label: "1", value: 1 },
       { label: "2", value: 2 },
       { label: "3", value: 3 },
@@ -87,7 +105,7 @@ export default defineComponent({
       { label: "5", value: 5 },
     ]);
 
-    const signList = ref([
+    const signList: Ref<BaseList[]> = ref([
       { label: ">=", value: ">=" },
       { label: ">", value: ">" },
       { label: "<=", value: "<=" },

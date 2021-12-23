@@ -1,11 +1,28 @@
-import axios from "axios";
+import axios, { AxiosInstance, AxiosPromise } from "axios";
 import { ElMessage } from "element-plus";
 import router from "@/router/index";
+import { getStore } from "@/utils/store";
 
-axios.defaults.baseURL = "/";
-axios.defaults.headers["Content-Type"] = "application/json;charset=UTF-8;";
-axios.defaults.headers["Accept"] = "application/json; charset=utf-8";
-// axios.defaults["responseType"] = "application/json;charset=UTF-8;";
+interface HttpHeaders {
+  token?: string,
+  [propertys:string]: any
+}
+
+interface Params {
+  url: string,
+  headers?: HttpHeaders,
+  data?: object,
+  method?: "GET" | "POST",
+  params?: object | null
+}
+
+const ajax: AxiosInstance = axios.create({
+  baseURL: "/", 
+  headers: {
+    "Content-Type": "application/json;charset=UTF-8",
+    "Accept": "application/json;charset=UTF-8",
+  },
+})
 
 // 请求拦截器，内部根据返回值，重新组装，统一管理。
 axios.interceptors.response.use((res) => {
@@ -26,7 +43,8 @@ axios.interceptors.response.use((res) => {
 });
 
 const http = {
-  get: function ({ data = {}, url, headers = {} }) {
+  get: function (params: Params) {
+    const { data = {}, url, headers = {} } = params
     let query = "";
     Object.entries(data).forEach(([key, value]) => {
       query += `${key}=${value}&`;
@@ -38,15 +56,17 @@ const http = {
 
     return this.http({ url: `${url}?${query}`, headers });
   },
-  post: function ({ data = {}, url, headers = {} }) {
-    return this.http({ methods: "POST", url, headers, data });
+  post: function (params: Params) {
+    const { data = {}, url, headers = {} } = params
+    return this.http({ method: "POST", url, headers, data });
   },
-  http: ({ methods = "GET", url, data, headers, params }) => {
+  http: (param: Params): AxiosPromise<object> => {
+    const { method = "GET", url, data, headers = {}, params } = param
     return new Promise((resolve, reject) => {
-      // axios.defaults.headers['token'] = localGet('token') || ''
-      return axios
+      headers['token'] = getStore('token') || ''
+      return ajax
         .request({
-          methods,
+          method,
           url,
           data,
           headers,

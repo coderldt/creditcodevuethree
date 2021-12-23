@@ -1,7 +1,7 @@
 <template>
   <div class="equityInvestment">equityInvestment</div>
 </template>
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 export default defineComponent({
   setup() {},

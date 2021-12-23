@@ -1,15 +1,17 @@
-import { createStore } from "vuex";
+import { InjectionKey } from "vue"
+import { createStore, Store, StoreOptions } from "vuex";
 import common from "./children/common";
+import { RootState } from "../types/store"
 
-interface State {
-  data: number;
-}
+export const key: InjectionKey<Store<RootState>> = Symbol()
 
-export default createStore<State>({
+const store = createStore<RootState> ({
   state: {
-    data: 123,
+    data: 123 
   },
   modules: {
     common,
   },
-});
+})
+
+export default store
