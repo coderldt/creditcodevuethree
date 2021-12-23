@@ -36,15 +36,15 @@ import CompanyBase from "./companyBase.vue";
 import Detail from "./detail.vue";
 
 interface Tabs {
-  title: string,
-  id: number | string,
-  value: number,
-  detail: object
+  title: string;
+  id: number | string;
+  value: number;
+  detail: {};
 }
 
 interface DetailApiParams {
-  name: string,
-  age: number
+  name: string;
+  age: number;
 }
 
 export default defineComponent({
@@ -76,7 +76,7 @@ export default defineComponent({
     };
 
     const beforeTabClick = async (activeName: string) => {
-      const detailApiParams: DetailApiParams = { name: '111', age: 100 }
+      const detailApiParams: DetailApiParams = { name: "111", age: 100 };
       const res = await getCreditDetail(detailApiParams);
       if (res) {
         console.log(res);

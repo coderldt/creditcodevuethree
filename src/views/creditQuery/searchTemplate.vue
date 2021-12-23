@@ -17,14 +17,14 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, inject, toRefs } from "vue";
+import { computed, defineComponent, toRefs } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 
 interface Item {
-  label: string,
-  icon: string,
-  link: string,
+  label: string;
+  icon: string;
+  link: string;
 }
 
 export default defineComponent({

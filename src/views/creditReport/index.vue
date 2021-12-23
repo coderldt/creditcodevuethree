@@ -26,10 +26,10 @@ import { defineComponent, Ref, ref } from "vue";
 import Search from "./search.vue";
 
 interface List {
-  name: string,
-  createTime: string,
-  status: number,
-  address: string
+  name: string;
+  createTime: string;
+  status: number;
+  address: string;
 }
 
 export default defineComponent({

@@ -26,13 +26,13 @@ import { defineComponent, reactive, ref } from "vue";
 import TimeRange from "./timeRange.vue";
 
 interface Form {
-  companyName: string,
-  time: string | string[],
+  companyName: string;
+  time: string | string[];
 }
 
 interface SubmitParams {
-  time?: string,
-  finalyValue: string | string[]
+  time?: string;
+  finalyValue: string | string[];
 }
 
 export default defineComponent({
