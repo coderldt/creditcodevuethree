@@ -2,7 +2,7 @@ module.exports = {
   extends: [
     "alloy",
     "alloy/typescript",
-    // "plugin:vue/recommended",
+    "plugin:vue/recommended",
     "plugin:prettier/recommended",
   ],
   parser: "vue-eslint-parser",
@@ -33,6 +33,20 @@ module.exports = {
         endOfLine: "auto",
       },
     ],
+    "vue/max-attributes-per-line": ["off"],
+    "vue/no-v-model-argument": ["off"],
+    "vue/html-self-closing": [
+      "error",
+      {
+        html: {
+          normal: "never",
+          void: "always",
+        },
+        svg: "always",
+        math: "always",
+      },
+    ],
+    "vue/singleline-html-element-content-newline": ["off"],
     "no-promise-executor-return": "off",
     "no-unreachable-loop": "off",
     "no-unsafe-optional-chaining": "off",

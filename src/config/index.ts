@@ -47,6 +47,19 @@ const menu: Array<Menu> = [
       },
     ],
   },
+  {
+    title: "系统管理",
+    icon: "Setting",
+    id: "3",
+    children: [
+      {
+        title: "用户管理",
+        icon: "",
+        path: "/system/user",
+        id: "3-1",
+      },
+    ],
+  },
 ];
 
 export { config, menu };

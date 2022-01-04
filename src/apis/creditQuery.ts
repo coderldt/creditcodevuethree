@@ -1,7 +1,7 @@
 import http from "./http";
 
 interface CreditQuery {
-  name: string
+  name: string;
 }
 
 export function getCreditDetail(params: CreditQuery) {

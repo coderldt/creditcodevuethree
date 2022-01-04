@@ -2,7 +2,7 @@
   <div class="relationship commonBox">
     <div class="title">关系图谱</div>
     <div class="search">
-      <el-input placeholder="请输入公司名称" style="width: 300px"></el-input>
+      <el-input placeholder="请输入公司名称" style="width: 300px" />
       <el-button type="primary">查询</el-button>
       <el-button>重置</el-button>
     </div>
@@ -14,7 +14,7 @@
           :label="item.label"
           :name="item.name"
         >
-          <component :is="item.name"></component>
+          <component :is="item.name" />
         </el-tab-pane>
       </el-tabs>
     </div>

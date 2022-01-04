@@ -8,20 +8,20 @@
       <el-tab-pane class="query" label="企业查询" :closable="false">
         <SearchTemplate
           v-model:search="search"
-          @onSearch="onSearch"
           class="searchTemplate"
-        ></SearchTemplate>
+          @onSearch="onSearch"
+        />
       </el-tab-pane>
       <el-tab-pane
+        v-for="(item, index) in list"
+        :key="index"
         :label="item.title"
         :name="item.title"
         closable
-        v-for="(item, index) in list"
-        :key="index"
       >
         <div class="content">
-          <CompanyBase :baseMsg="item.detail.baseMsg"></CompanyBase>
-          <Detail></Detail>
+          <CompanyBase :base-msg="item.detail.baseMsg" />
+          <Detail />
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -63,7 +63,7 @@ export default defineComponent({
         return ElMessage.error("请输入企业名称或者信用代码");
       }
 
-      if (list.value.find((i) => i.title == "蚂蚁科技集团股份邮箱公司")) {
+      if (list.value.find((i) => i.title === "蚂蚁科技集团股份邮箱公司")) {
         console.log("已查询");
       } else {
         list.value.push({
@@ -79,7 +79,6 @@ export default defineComponent({
       const detailApiParams: DetailApiParams = { name: "111", age: 100 };
       const res = await getCreditDetail(detailApiParams);
       if (res) {
-        console.log(res);
         const obj = list.value.find((i) => i.title === activeName);
         if (obj) {
           obj.detail = res;

@@ -1,7 +1,7 @@
 <template>
   <CommonBox title="统计分析">
     <div class="content">
-      <div class="item" v-for="(item, index) in list" :key="index">
+      <div v-for="(item, index) in list" :key="index" class="item">
         <div class="label">
           {{ item.title }}
         </div>
@@ -9,7 +9,7 @@
           <span class="value">{{ item.value }}</span>
           <div class="trend" :style="{ background: colorList[item.type].back }">
             <el-icon :color="colorList[item.type].color">
-              <component :is="item.type ? 'bottom' : 'top'"></component>
+              <component :is="item.type ? 'bottom' : 'top'" />
             </el-icon>
             <div class="count" :style="{ color: colorList[item.type].color }">
               {{ item.count }}
@@ -21,36 +21,36 @@
     <div class="typeItem">
       <el-tabs v-model="tabsActive">
         <el-tab-pane
-          :label="item.label"
-          :name="item.component"
           v-for="(item, index) in tabs"
           :key="index"
+          :label="item.label"
+          :name="item.component"
         >
-          <component :is="item.component"></component>
+          <component :is="item.component" />
         </el-tab-pane>
       </el-tabs>
     </div>
   </CommonBox>
 </template>
-<script lang="ts" >
+<script lang="ts">
 import { ref, defineComponent, Ref } from "vue";
 import Model from "./children";
 
 interface List {
-  title: string,
-  value: number,
-  type: number,
-  count: number,
+  title: string;
+  value: number;
+  type: number;
+  count: number;
 }
 
 interface Color {
-  back: string,
-  color: string,
+  back: string;
+  color: string;
 }
 
 interface Tab {
-  label: string,
-  component: string,
+  label: string;
+  component: string;
 }
 export default defineComponent({
   components: {

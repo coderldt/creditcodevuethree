@@ -21,6 +21,11 @@ const routes = [
     name: "relationship",
     component: () => import("@/views/relationship/index.vue"),
   },
+  {
+    path: "/system/user",
+    name: "relationship",
+    component: () => import("@/views/system/user/index.vue"),
+  },
 ];
 
 const router = createRouter({

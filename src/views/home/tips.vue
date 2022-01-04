@@ -5,29 +5,29 @@
       <div class="more">更多</div>
     </div>
     <template v-if="noticeList.length">
-      <div class="item toe" v-for="(item, index) in noticeList" :key="index">
+      <div v-for="(item, index) in noticeList" :key="index" class="item toe">
         {{ item.title }}
       </div>
     </template>
-    <el-empty v-else description="暂时数据" :image-size="80"></el-empty>
+    <el-empty v-else description="暂时数据" :image-size="80" />
     <div class="title tip">
       消息栏
       <div class="more">更多</div>
     </div>
     <template v-if="tipList.length">
-      <div class="item toe" v-for="(item, index) in tipList" :key="index">
+      <div v-for="(item, index) in tipList" :key="index" class="item toe">
         {{ item.title }}
       </div>
     </template>
-    <el-empty v-else description="暂时数据" :image-size="80"></el-empty>
+    <el-empty v-else description="暂时数据" :image-size="80" />
   </div>
 </template>
 <script lang="ts">
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 interface tipsList {
-  title?: string,
-  url?: string
+  title?: string;
+  url?: string;
 }
 
 export default defineComponent({

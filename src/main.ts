@@ -13,6 +13,7 @@ const app = createApp(App);
 
 app.use(ElementPlus, {
   locale: zhCn,
+  size: "small",
 });
 
 globalCommonComponents(app);

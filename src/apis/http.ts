@@ -20,8 +20,8 @@ const ajax: AxiosInstance = axios.create({
   baseURL: "/",
   headers: {
     "Content-Type": "application/json;charset=UTF-8",
-    Accept: "application/json;charset=UTF-8"
-  }
+    Accept: "application/json;charset=UTF-8",
+  },
 });
 
 // 请求拦截器，内部根据返回值，重新组装，统一管理。
@@ -31,9 +31,9 @@ axios.interceptors.response.use((res) => {
     ElMessage.error("服务端异常！");
     return Promise.reject(res);
   }
-  if (res.data.code != 200) {
+  if (res.data.code !== 200) {
     if (res.data.message) ElMessage.error(res.data.msg);
-    if (res.data.code == 419) {
+    if (res.data.code === 419) {
       router.push({ path: "/login" });
     }
     return Promise.reject(res.data);
@@ -53,6 +53,7 @@ const http = {
     if (query) {
       query = query.slice(0, -1);
     }
+    console.log(111, url, this);
 
     return this.http({ url: `${url}?${query}`, headers });
   },
@@ -62,6 +63,8 @@ const http = {
   },
   http: (param: Params): AxiosPromise<object> => {
     const { method = "GET", url, data, headers = {}, params } = param;
+    console.log(2);
+
     return new Promise((resolve, reject) => {
       headers["token"] = getStore("token") || "";
       return ajax
@@ -70,7 +73,7 @@ const http = {
           url,
           data,
           headers,
-          params
+          params,
         })
         .then(
           (res) => {
@@ -82,7 +85,7 @@ const http = {
           }
         );
     });
-  }
+  },
 };
 
 export default http;
