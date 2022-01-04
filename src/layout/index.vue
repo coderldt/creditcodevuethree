@@ -1,15 +1,15 @@
 <template>
   <el-container>
     <el-aside :width="getCommonWidth">
-      <Logo :title="configData.title"></Logo>
-      <Menu></Menu>
+      <Logo :title="configData.title" />
+      <Menu />
     </el-aside>
     <el-container>
       <el-header :style="{ right: 0, left: getCommonWidth }">
-        <Header></Header>
+        <Header />
       </el-header>
       <el-main :style="{ left: getCommonWidth }">
-        <router-view></router-view>
+        <router-view />
       </el-main>
     </el-container>
   </el-container>
@@ -21,24 +21,24 @@ import Header from "./header.vue";
 import Menu from "@/components/menu/index.vue";
 import { config } from "@/config";
 export default {
+  components: {
+    Header,
+    Logo,
+    Menu,
+  },
   setup() {
     const configData = config;
     const { collapseStatus } = inject("collapse");
 
     const getCommonWidth = computed(() => {
-      return collapseStatus.value ? '63px' : '200px'
-    })
-    
+      return collapseStatus.value ? "63px" : "200px";
+    });
+
     return {
       configData,
       collapseStatus,
-      getCommonWidth
+      getCommonWidth,
     };
-  },
-  components: {
-    Header,
-    Logo,
-    Menu,
   },
 };
 </script>

@@ -1,10 +1,5 @@
 module.exports = {
-  extends: [
-    "alloy",
-    "alloy/typescript",
-    "plugin:vue/recommended",
-    "plugin:prettier/recommended",
-  ],
+  extends: ["alloy", "alloy/typescript", "plugin:vue/recommended", "plugin:prettier/recommended"],
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",
@@ -13,27 +8,10 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
-        // printWidth: 200,
-        //   tabWidth: 4,
-        //   useTabs: false,
-        //   semi: true, // 未尾逗号
-        //   vueIndentScriptAndStyle: false,
-        //   singleQuote: true, // 单引号
-        //   quoteProps: "as-needed",
-        //   bracketSpacing: false,
-        //   trailingComma: "none", // 未尾分号
-        //   jsxBracketSameLine: false,
-        //   jsxSingleQuote: false,
-        //   arrowParens: "always",
-        //   insertPragma: "never",
-        //   requirePragma: false,
-        //   proseWrap: "never",
-        //   htmlWhitespaceSensitivity: "ignore",
-        //   endOfLine: "auto",
+        printWidth: 200,
         endOfLine: "auto",
       },
     ],
-    "vue/max-attributes-per-line": ["off"],
     "vue/no-v-model-argument": ["off"],
     "vue/html-self-closing": [
       "error",
@@ -44,6 +22,17 @@ module.exports = {
         },
         svg: "always",
         math: "always",
+      },
+    ],
+    "vue/max-attributes-per-line": [
+      "error",
+      {
+        singleline: {
+          max: 6,
+        },
+        multiline: {
+          max: 5,
+        },
       },
     ],
     "vue/singleline-html-element-content-newline": ["off"],

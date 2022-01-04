@@ -8,12 +8,7 @@
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select v-model="form.status">
-            <el-option
-              v-for="item in statusList"
-              :key="item.key"
-              :label="item.value"
-              :value="item.key"
-            />
+            <el-option v-for="item in statusList" :key="item.key" :label="item.value" :value="item.key" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -23,54 +18,54 @@
       </el-form>
     </div>
     <div class="content">
-      <div class="tree"></div>
-      <div class="table">
-        <el-table
-          header-cell-class-name="dark"
-          border
-          highlight-current-row
-          stripe
-          :data="list"
-        >
-          <el-table-column label="登录账号" prop="loginName" align="center" />
-          <el-table-column label="用户昵称" prop="userName" align="center" />
-          <el-table-column label="状态" align="center">
-            <template #default="{ row }">
-              <el-switch
-                v-model="row.status"
-                :active-value="1"
-                :inactive-value="2"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column label="创建日期" prop="createTime" align="center" />
-          <el-table-column label="手机号" prop="phone" align="center" />
-          <el-table-column label="邮箱" prop="email" align="center" />
-          <el-table-column label="操作" align="center">
-            <template #default="{ row }">
-              <el-button type="text" @click="edit(row)">编辑</el-button>
-              <el-popconfirm title="是否要删除所选项" @confirm="del(row)">
-                <template #reference>
-                  <el-button type="text">删除</el-button>
+      <el-row :gutter="20">
+        <el-col :span="6">
+          <div class="tree">
+            <el-input v-model="filterText" placeholder="Filter keyword" />
+            <el-tree ref="treeRef" class="filter-tree" :data="data" :props="defaultProps" :filter-node-method="filterNode" />
+          </div>
+        </el-col>
+        <el-col :span="18">
+          <div class="table">
+            <el-table header-cell-class-name="dark" border highlight-current-row stripe :data="list">
+              <el-table-column label="登录账号" prop="loginName" align="center" />
+              <el-table-column label="用户昵称" prop="userName" align="center" />
+              <el-table-column label="状态" align="center">
+                <template #default="{ row }">
+                  <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
                 </template>
-              </el-popconfirm>
-              <el-popconfirm title="是否要删除所选项" @confirm="rePass(row)">
-                <template #reference>
-                  <el-button type="text">重置密码</el-button>
+              </el-table-column>
+              <el-table-column label="创建日期" prop="createTime" align="center" />
+              <el-table-column label="手机号" prop="phone" align="center" />
+              <el-table-column label="邮箱" prop="email" align="center" />
+              <el-table-column label="操作" align="center">
+                <template #default="{ row }">
+                  <el-button type="text" @click="edit(row)"> 编辑 </el-button>
+                  <el-popconfirm title="是否要删除所选项" @confirm="del(row)">
+                    <template #reference>
+                      <el-button type="text">删除</el-button>
+                    </template>
+                  </el-popconfirm>
+                  <el-popconfirm title="是否要删除所选项" @confirm="rePass(row)">
+                    <template #reference>
+                      <el-button type="text">重置密码</el-button>
+                    </template>
+                  </el-popconfirm>
                 </template>
-              </el-popconfirm>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+      </el-row>
     </div>
     <Edit v-model:dialogVisible="dialog.isEdit" :data="dialog.data" />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref, watch } from "vue";
 import { statusList } from "@/config/system";
 import Edit from "./edit.vue";
+import { ElTree } from "element-plus";
 interface Form {
   loginName: string;
   status: number | string;
@@ -92,6 +87,12 @@ export interface List {
 interface Dialog {
   isEdit: boolean;
   data: List;
+}
+
+interface Tree {
+  id: number;
+  label: string;
+  children?: Tree[];
 }
 
 export default defineComponent({
@@ -140,6 +141,73 @@ export default defineComponent({
     const rePass = (row: List): void => {
       console.log("重置密码", row.id);
     };
+
+    // 职位筛选
+    const filterText = ref("");
+    const treeRef = ref<InstanceType<typeof ElTree>>();
+
+    const defaultProps = {
+      children: "children",
+      label: "label",
+    };
+    watch(filterText, (val) => {
+      treeRef.value!.filter(val);
+    });
+
+    const filterNode = (value: string, data: Tree) => {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    };
+    const data: Tree[] = [
+      {
+        id: 1,
+        label: "Level one 1",
+        children: [
+          {
+            id: 4,
+            label: "Level two 1-1",
+            children: [
+              {
+                id: 9,
+                label: "Level three 1-1-1",
+              },
+              {
+                id: 10,
+                label: "Level three 1-1-2",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 2,
+        label: "Level one 2",
+        children: [
+          {
+            id: 5,
+            label: "Level two 2-1",
+          },
+          {
+            id: 6,
+            label: "Level two 2-2",
+          },
+        ],
+      },
+      {
+        id: 3,
+        label: "Level one 3",
+        children: [
+          {
+            id: 7,
+            label: "Level two 3-1",
+          },
+          {
+            id: 8,
+            label: "Level two 3-2",
+          },
+        ],
+      },
+    ];
     return {
       form,
       list,
@@ -148,6 +216,11 @@ export default defineComponent({
       del,
       rePass,
       dialog,
+      data,
+      filterText,
+      treeRef,
+      defaultProps,
+      filterNode,
     };
   },
 });

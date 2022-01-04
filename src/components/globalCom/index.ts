@@ -4,7 +4,7 @@ import * as ElIconModules from "@element-plus/icons";
 import { App } from "vue";
 
 export default function globalCommonComponents(app: App) {
-  Object.entries(ElIconModules).map(([key, value]) => {
+  Object.entries(ElIconModules).forEach(([key, value]) => {
     app.component(key, value);
   });
   app.component("CommonBox", CommonBox);

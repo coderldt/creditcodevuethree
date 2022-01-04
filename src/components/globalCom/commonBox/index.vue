@@ -2,7 +2,7 @@
   <div class="commonBox">
     <div class="title">
       {{ title }}
-      <div class="more" v-if="isMore" @click="onMoreClick">{{ moreText }}</div>
+      <div v-if="isMore" class="more" @click="onMoreClick">{{ moreText }}</div>
     </div>
     <slot></slot>
   </div>
@@ -13,6 +13,7 @@ export default {
   props: {
     title: {
       type: String,
+      default: "",
     },
     isMore: {
       type: Boolean,

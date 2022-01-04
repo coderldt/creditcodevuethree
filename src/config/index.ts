@@ -50,6 +50,7 @@ const menu: Array<Menu> = [
   {
     title: "系统管理",
     icon: "Setting",
+    path: "/system",
     id: "3",
     children: [
       {

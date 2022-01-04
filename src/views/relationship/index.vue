@@ -8,12 +8,7 @@
     </div>
     <div class="content">
       <el-tabs v-model="activeName">
-        <el-tab-pane
-          v-for="(item, index) in tabs"
-          :key="index"
-          :label="item.label"
-          :name="item.name"
-        >
+        <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.name">
           <component :is="item.name" />
         </el-tab-pane>
       </el-tabs>

@@ -23,7 +23,7 @@ const routes = [
   },
   {
     path: "/system/user",
-    name: "relationship",
+    name: "systemUser",
     component: () => import("@/views/system/user/index.vue"),
   },
 ];

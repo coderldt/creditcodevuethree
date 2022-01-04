@@ -1,7 +1,7 @@
 <template>
   <CommonBox title="代办事项">
     <div class="content">
-      <div class="item" v-for="(item, index) in list" :key="index">
+      <div v-for="(item, index) in list" :key="index" class="item">
         <div class="label">
           {{ item.title }}
           <el-icon size="14"><arrow-right /></el-icon>
@@ -14,13 +14,13 @@
     </div>
   </CommonBox>
 </template>
-<script lang="ts" >
-import {defineComponent} from "vue";
+<script lang="ts">
+import { defineComponent } from "vue";
 import surprised from "@/assets/img/surprised.png";
 
 interface list {
-  title: string,
-  value: number
+  title: string;
+  value: number;
 }
 
 export default defineComponent({

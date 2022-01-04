@@ -1,7 +1,7 @@
 <template>
   <div class="header">
-    <Collapse class="collapse"></Collapse>
-    <My class="my"></My>
+    <Collapse class="collapse" />
+    <My class="my" />
   </div>
 </template>
 <script>
