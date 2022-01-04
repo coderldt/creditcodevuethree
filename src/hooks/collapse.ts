@@ -1,6 +1,5 @@
 import { ref, Ref } from "vue";
 
-
 function collapseHook() {
   const collapseStatus: Ref<boolean> = ref(false);
 

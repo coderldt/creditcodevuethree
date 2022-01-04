@@ -2,10 +2,13 @@ module.exports = {
   extends: [
     "alloy",
     "alloy/typescript",
-    "plugin:vue/recommended",
+    // "plugin:vue/recommended",
     "plugin:prettier/recommended",
   ],
-  parser: "@typescript-eslint/parser",
+  parser: "vue-eslint-parser",
+  parserOptions: {
+    parser: "@typescript-eslint/parser",
+  },
   rules: {
     "prettier/prettier": [
       "error",
@@ -27,7 +30,7 @@ module.exports = {
         //   proseWrap: "never",
         //   htmlWhitespaceSensitivity: "ignore",
         //   endOfLine: "auto",
-        endOfLine: "lf",
+        endOfLine: "auto",
       },
     ],
     "no-promise-executor-return": "off",

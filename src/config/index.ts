@@ -1,16 +1,16 @@
-interface config {
-  title: string
+interface Config {
+  title: string;
 }
 
 interface Menu {
-  title: string,
-  icon: string,
-  path?: string,
-  id: string,
-  children?: Array<Menu>
+  title: string;
+  icon: string;
+  path?: string;
+  id: string;
+  children?: Array<Menu>;
 }
 
-const config: config = {
+const config: Config = {
   title: "我的征信",
 };
 

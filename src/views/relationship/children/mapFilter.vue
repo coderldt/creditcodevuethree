@@ -1,9 +1,9 @@
 <template>
   <div class="mapFilter" :style="{ width: getWidth }">
     <el-icon @click="handlerIconClick">
-      <component :is="isOpen ? 'arrow-down-bold' : 'arrow-up-bold'"></component>
+      <component :is="isOpen ? 'arrow-down-bold' : 'arrow-up-bold'" />
     </el-icon>
-    <div class="detail" v-show="isOpen">
+    <div v-show="isOpen" class="detail">
       <div class="title">图谱拓扑</div>
       <div class="form">
         <el-form label-position="top" :model="form" label-width="100px">
@@ -14,12 +14,12 @@
                 :key="index"
                 :label="item.label"
                 :value="item.value"
-              ></el-option>
+              />
             </el-select>
           </el-form-item>
           <el-form-item label="关系模型">
             <el-select v-model="form.investmentValue" disabled size="mini">
-              <el-option label="投资" value="investment"></el-option>
+              <el-option label="投资" value="investment" />
             </el-select>
           </el-form-item>
           <el-form-item label="持股比例">
@@ -31,17 +31,13 @@
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
-                  ></el-option>
+                  />
                 </el-select>
               </el-col>
               <el-col :span="12">
-                <el-input
-                  type="number"
-                  size="mini"
-                  v-model="form.signValue"
-                ></el-input>
+                <el-input v-model="form.signValue" type="number" size="mini" />
               </el-col>
-              <el-col :span="2">&nbsp;%</el-col>
+              <el-col :span="2"> &nbsp;% </el-col>
             </el-row>
           </el-form-item>
         </el-form>
@@ -54,20 +50,20 @@ import { computed, defineComponent, reactive, Ref, ref, watch } from "vue";
 import debounce from "lodash.debounce";
 
 interface BaseList {
-  label: string,
-  value: string
+  label: string;
+  value: string;
 }
 
 interface TopologicalList {
-  label: string,
-  value: number
+  label: string;
+  value: number;
 }
 
 interface From {
-  topologicalValue: number,
-  investmentValue: string,
-  sign: string,
-  signValue: number,
+  topologicalValue: number;
+  investmentValue: string;
+  sign: string;
+  signValue: number;
 }
 
 export default defineComponent({
