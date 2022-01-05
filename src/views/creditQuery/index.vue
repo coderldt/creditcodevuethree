@@ -1,24 +1,10 @@
 <template>
   <div class="creditQuery">
-    <el-tabs
-      type="border-card"
-      :before-leave="beforeTabClick"
-      @tabRemove="onTabRemove"
-    >
+    <el-tabs type="border-card" :before-leave="beforeTabClick" @tabRemove="onTabRemove">
       <el-tab-pane class="query" label="企业查询" :closable="false">
-        <SearchTemplate
-          v-model:search="search"
-          class="searchTemplate"
-          @onSearch="onSearch"
-        />
+        <SearchTemplate v-model:search="search" class="searchTemplate" @onSearch="onSearch" />
       </el-tab-pane>
-      <el-tab-pane
-        v-for="(item, index) in list"
-        :key="index"
-        :label="item.title"
-        :name="item.title"
-        closable
-      >
+      <el-tab-pane v-for="(item, index) in list" :key="index" :label="item.title" :name="item.title" closable>
         <div class="content">
           <CompanyBase :base-msg="item.detail.baseMsg" />
           <Detail />

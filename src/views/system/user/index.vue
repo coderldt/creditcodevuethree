@@ -21,15 +21,20 @@
       <el-row :gutter="20">
         <el-col :span="6">
           <div class="tree">
-            <el-input v-model="filterText" placeholder="Filter keyword" />
+            <el-input v-model="filterText" placeholder="请输入关键字" />
             <el-tree ref="treeRef" class="filter-tree" :data="data" :props="defaultProps" :filter-node-method="filterNode" />
           </div>
         </el-col>
         <el-col :span="18">
           <div class="table">
-            <el-table header-cell-class-name="dark" border highlight-current-row stripe :data="list">
-              <el-table-column label="登录账号" prop="loginName" align="center" />
-              <el-table-column label="用户昵称" prop="userName" align="center" />
+            <Table :column="tableColumn" :list="list" :pagination="pagination" @onPaginationChange="onPaginationChange">
+              <template #status="{ row }">
+                <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
+              </template>
+            </Table>
+            <!-- <el-table header-cell-class-name="dark" border highlight-current-row stripe :data="list">
+              <el-table-column label="登录账号" prop="loginName" width="100" align="center" />
+              <el-table-column label="用户昵称" prop="userName" width="100" align="center" />
               <el-table-column label="状态" align="center">
                 <template #default="{ row }">
                   <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
@@ -54,6 +59,15 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-pagination
+              v-model:currentPage="pagination.page"
+              :page-sizes="[10, 20, 50, 100]"
+              :total="pagination.total"
+              :page-size="pagination.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              @current-change="onPaginationChange"
+              @size-change="onSizeChange"
+            /> -->
           </div>
         </el-col>
       </el-row>
@@ -64,6 +78,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, watch } from "vue";
 import { statusList } from "@/config/system";
+import Table from "@/components/table/index.vue";
 import Edit from "./edit.vue";
 import { ElTree } from "element-plus";
 interface Form {
@@ -90,14 +105,21 @@ interface Dialog {
 }
 
 interface Tree {
-  id: number;
+  id: string;
   label: string;
   children?: Tree[];
+}
+
+interface Pagination {
+  page: number;
+  pageSize: number;
+  total: number;
 }
 
 export default defineComponent({
   components: {
     Edit,
+    Table,
   },
   setup() {
     const dialog: Dialog = reactive({
@@ -109,6 +131,33 @@ export default defineComponent({
       loginName: "",
       status: 0,
     });
+
+    const pagination: Pagination = reactive({
+      page: 1,
+      pageSize: 10,
+      total: 50,
+      pageSizes: [20, 50],
+    });
+    const onPaginationChange = (Object: Object) => {
+      console.log(Object);
+    };
+    const onSizeChange = (Object: Object) => {
+      console.log(Object);
+    };
+
+    const tableColumn = [
+      { label: "登录账号", prop: "loginName", width: "", align: "center" },
+      { label: "用户昵称", prop: "userName", width: "", align: "center" },
+      {
+        label: "状态",
+        width: "",
+        align: "center",
+        slot: "status",
+      },
+      { label: "创建日期", prop: "createTime", width: "", align: "center" },
+      { label: "手机号", prop: "phone", width: "", align: "center" },
+      { label: "邮箱", prop: "email", width: "", align: "center" },
+    ];
 
     const list: List[] = reactive([
       {
@@ -154,56 +203,40 @@ export default defineComponent({
       treeRef.value!.filter(val);
     });
 
-    const filterNode = (value: string, data: Tree) => {
+    const filterNode = (value: string, data: Tree): Boolean => {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     };
     const data: Tree[] = [
       {
-        id: 1,
-        label: "Level one 1",
+        id: "1",
+        label: "中建资本控股有限公司",
         children: [
           {
-            id: 4,
-            label: "Level two 1-1",
+            id: "1-1",
+            label: "财务风险部",
+          },
+          {
+            id: "1-2",
+            label: "法务风险部",
+          },
+          {
+            id: "1-3",
+            label: "信息技术部",
+          },
+          {
+            id: "1-4",
+            label: "中建融资租赁有限公司",
             children: [
               {
-                id: 9,
-                label: "Level three 1-1-1",
-              },
-              {
-                id: 10,
-                label: "Level three 1-1-2",
+                id: "1-4-1",
+                label: "运营部",
               },
             ],
           },
-        ],
-      },
-      {
-        id: 2,
-        label: "Level one 2",
-        children: [
           {
-            id: 5,
-            label: "Level two 2-1",
-          },
-          {
-            id: 6,
-            label: "Level two 2-2",
-          },
-        ],
-      },
-      {
-        id: 3,
-        label: "Level one 3",
-        children: [
-          {
-            id: 7,
-            label: "Level two 3-1",
-          },
-          {
-            id: 8,
-            label: "Level two 3-2",
+            id: "1-5",
+            label: "爱美客技术发展股份有限公司",
           },
         ],
       },
@@ -221,16 +254,30 @@ export default defineComponent({
       treeRef,
       defaultProps,
       filterNode,
+      pagination,
+      onPaginationChange,
+      onSizeChange,
+      tableColumn,
     };
   },
 });
 </script>
 
 <style lang="less" scoped>
+.userManager {
+  min-height: calc(100% - 40px);
+}
+.tree .el-input {
+  margin-bottom: 15px;
+}
 .table {
+  text-align: center;
   :deep(.dark) {
     color: #323c47;
     background-color: #fafafa;
+  }
+  .el-pagination {
+    margin-top: 15px;
   }
 }
 </style>

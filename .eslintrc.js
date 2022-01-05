@@ -36,6 +36,7 @@ module.exports = {
       },
     ],
     "vue/singleline-html-element-content-newline": ["off"],
+    "vue/v-slot-style": ["off"],
     "no-promise-executor-return": "off",
     "no-unreachable-loop": "off",
     "no-unsafe-optional-chaining": "off",
