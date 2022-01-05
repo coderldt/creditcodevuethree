@@ -229,14 +229,4 @@ export default defineComponent({
 .tree .el-input {
   margin-bottom: 15px;
 }
-.table {
-  text-align: center;
-  :deep(.dark) {
-    color: #323c47;
-    background-color: #fafafa;
-  }
-  .el-pagination {
-    margin-top: 15px;
-  }
-}
 </style>

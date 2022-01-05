@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div class="tableCom">
     <el-table header-cell-class-name="dark" border highlight-current-row stripe :data="list">
       <template v-for="(item, index) in column">
         <el-table-column v-if="item.slot" :key="'slot' + index" :label="item.label" :width="item.width" :align="item.align">
@@ -93,6 +93,15 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.tableCom {
+  text-align: center;
+  .el-table {
+    :deep(.dark) {
+      color: #323c47;
+      background-color: #fafafa;
+    }
+  }
+}
 .el-table + .el-pagination {
   margin-top: 20px;
 }

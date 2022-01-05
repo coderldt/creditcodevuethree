@@ -22,6 +22,11 @@ const routes = [
     component: () => import("@/views/relationship/index.vue"),
   },
   {
+    path: "/risk/check",
+    name: "riskCheck",
+    component: () => import("@/views/risk/check/index.vue"),
+  },
+  {
     path: "/system/user",
     name: "systemUser",
     component: () => import("@/views/system/user/index.vue"),

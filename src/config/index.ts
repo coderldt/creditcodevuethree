@@ -4,7 +4,7 @@ interface Config {
 
 interface Menu {
   title: string;
-  icon: string;
+  icon?: string;
   path?: string;
   id: string;
   children?: Array<Menu>;
@@ -44,6 +44,19 @@ const menu: Array<Menu> = [
         icon: "",
         path: "/relationship",
         id: "2-3",
+      },
+    ],
+  },
+  {
+    title: "风险计划",
+    icon: "Moon",
+    id: "4",
+    path: "",
+    children: [
+      {
+        title: "专项计划风险跟踪",
+        id: "4-1",
+        path: "/risk/check",
       },
     ],
   },
