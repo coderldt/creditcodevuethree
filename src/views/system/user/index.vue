@@ -2,7 +2,7 @@
   <div class="userManager commonBox">
     <div class="title">用户管理</div>
     <div class="search">
-      <el-form :model="form" inline>
+      <el-form ref="formRef" :model="form" inline>
         <el-form-item label="登录账户" prop="loginName">
           <el-input v-model="form.loginName" placeholder="请输入" />
         </el-form-item>
@@ -26,49 +26,24 @@
           </div>
         </el-col>
         <el-col :span="18">
-          <div class="table">
-            <Table :column="tableColumn" :list="list" :pagination="pagination" @onPaginationChange="onPaginationChange">
-              <template #status="{ row }">
-                <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
-              </template>
-            </Table>
-            <!-- <el-table header-cell-class-name="dark" border highlight-current-row stripe :data="list">
-              <el-table-column label="登录账号" prop="loginName" width="100" align="center" />
-              <el-table-column label="用户昵称" prop="userName" width="100" align="center" />
-              <el-table-column label="状态" align="center">
-                <template #default="{ row }">
-                  <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
+          <Table :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
+            <template #status="{ row }">
+              <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
+            </template>
+            <template #control="{ row }">
+              <el-button type="text" @click="edit(row)"> 编辑 </el-button>
+              <el-popconfirm title="是否要删除所选项" @confirm="del(row)">
+                <template #reference>
+                  <el-button type="text">删除</el-button>
                 </template>
-              </el-table-column>
-              <el-table-column label="创建日期" prop="createTime" align="center" />
-              <el-table-column label="手机号" prop="phone" align="center" />
-              <el-table-column label="邮箱" prop="email" align="center" />
-              <el-table-column label="操作" align="center">
-                <template #default="{ row }">
-                  <el-button type="text" @click="edit(row)"> 编辑 </el-button>
-                  <el-popconfirm title="是否要删除所选项" @confirm="del(row)">
-                    <template #reference>
-                      <el-button type="text">删除</el-button>
-                    </template>
-                  </el-popconfirm>
-                  <el-popconfirm title="是否要删除所选项" @confirm="rePass(row)">
-                    <template #reference>
-                      <el-button type="text">重置密码</el-button>
-                    </template>
-                  </el-popconfirm>
+              </el-popconfirm>
+              <el-popconfirm title="是否要删除所选项" @confirm="rePass(row)">
+                <template #reference>
+                  <el-button type="text">重置密码</el-button>
                 </template>
-              </el-table-column>
-            </el-table>
-            <el-pagination
-              v-model:currentPage="pagination.page"
-              :page-sizes="[10, 20, 50, 100]"
-              :total="pagination.total"
-              :page-size="pagination.pageSize"
-              layout="total, sizes, prev, pager, next, jumper"
-              @current-change="onPaginationChange"
-              @size-change="onSizeChange"
-            /> -->
-          </div>
+              </el-popconfirm>
+            </template>
+          </Table>
         </el-col>
       </el-row>
     </div>
@@ -78,9 +53,10 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, watch } from "vue";
 import { statusList } from "@/config/system";
-import Table from "@/components/table/index.vue";
+import Table, { TableColumn } from "@/components/table/index.vue";
 import Edit from "./edit.vue";
-import { ElTree } from "element-plus";
+import { ElTree, ElForm } from "element-plus";
+
 interface Form {
   loginName: string;
   status: number | string;
@@ -110,53 +86,30 @@ interface Tree {
   children?: Tree[];
 }
 
-interface Pagination {
-  page: number;
-  pageSize: number;
-  total: number;
-}
-
 export default defineComponent({
   components: {
     Edit,
     Table,
   },
   setup() {
-    const dialog: Dialog = reactive({
-      isEdit: false,
-      data: {},
-    });
-
     const form: Form = reactive({
       loginName: "",
       status: 0,
     });
 
-    const pagination: Pagination = reactive({
-      page: 1,
-      pageSize: 10,
-      total: 50,
-      pageSizes: [20, 50],
-    });
+    const total = ref(50);
     const onPaginationChange = (Object: Object) => {
       console.log(Object);
     };
-    const onSizeChange = (Object: Object) => {
-      console.log(Object);
-    };
 
-    const tableColumn = [
+    const tableColumn: TableColumn[] = [
       { label: "登录账号", prop: "loginName", width: "", align: "center" },
       { label: "用户昵称", prop: "userName", width: "", align: "center" },
-      {
-        label: "状态",
-        width: "",
-        align: "center",
-        slot: "status",
-      },
+      { label: "状态", align: "center", slot: "status" },
       { label: "创建日期", prop: "createTime", width: "", align: "center" },
       { label: "手机号", prop: "phone", width: "", align: "center" },
       { label: "邮箱", prop: "email", width: "", align: "center" },
+      { label: "操作", align: "center", slot: "control" },
     ];
 
     const list: List[] = reactive([
@@ -180,6 +133,10 @@ export default defineComponent({
       },
     ]);
 
+    const dialog: Dialog = reactive({
+      isEdit: false,
+      data: {},
+    });
     const edit = (row: List): void => {
       dialog.isEdit = true;
       dialog.data = row;
@@ -241,6 +198,8 @@ export default defineComponent({
         ],
       },
     ];
+
+    const formRef = ref<InstanceType<typeof ElForm>>();
     return {
       form,
       list,
@@ -253,11 +212,11 @@ export default defineComponent({
       filterText,
       treeRef,
       defaultProps,
+      total,
       filterNode,
-      pagination,
       onPaginationChange,
-      onSizeChange,
       tableColumn,
+      formRef,
     };
   },
 });
