@@ -17,9 +17,9 @@
     </div>
     <div class="content">
       <Table :column="tableColumn" :total="159" :list="list">
-        <template #control>
-          <el-button type="text"> 查看风险详情 </el-button>
-          <el-button type="text"> 查看集中的详情 </el-button>
+        <template #control="{ row }">
+          <el-button type="text" @click="handleRiskDetail(row)"> 查看风险详情 </el-button>
+          <el-button type="text" @click="handleFocusDetail(row)"> 查看集中的详情 </el-button>
         </template>
       </Table>
     </div>
@@ -27,14 +27,15 @@
 </template>
 
 <script lang="ts">
-import { ElForm } from "element-plus";
+import { ElForm, ElMessage } from "element-plus";
 import { defineComponent, reactive, ref } from "vue";
 import Table, { TableColumn } from "@/components/table/index.vue";
+import useStore from "@/store/children/risk";
 interface Form {
   productName: string;
   assetNumber: string;
 }
-interface List {
+export interface List {
   productName: string;
   assetNumber: string;
   companyName: string;
@@ -66,11 +67,27 @@ export default defineComponent({
       { productName: "0007482-B23a-4ba3", assetNumber: "安心签专项计划", companyName: "测试安心签企业", date: "2021-04-09 00:00:00", size: "10000000" },
     ];
 
+    const handleRiskDetail = (row: List) => {
+      ElMessage({
+        message: "别点了，没东西了！！",
+        type: "warning",
+      });
+    };
+    const detail = ref({});
+    const store = useStore();
+    const handleFocusDetail = (row: List) => {
+      detail.value = row;
+      console.log(store);
+    };
+
     return {
       formRef,
       form,
       tableColumn,
       list,
+      handleRiskDetail,
+      handleFocusDetail,
+      detail,
     };
   },
 });
