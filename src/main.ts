@@ -17,4 +17,4 @@ app.use(ElementPlus, {
 });
 
 globalCommonComponents(app);
-app.use(store, key).use(router).mount("#app");
+app.use(store).use(router).mount("#app");

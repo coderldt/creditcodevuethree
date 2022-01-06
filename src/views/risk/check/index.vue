@@ -30,7 +30,8 @@
 import { ElForm, ElMessage } from "element-plus";
 import { defineComponent, reactive, ref } from "vue";
 import Table, { TableColumn } from "@/components/table/index.vue";
-import useStore from "@/store/children/risk";
+import { useStore } from "vuex";
+// import useStore from "@/store/children/risk";
 interface Form {
   productName: string;
   assetNumber: string;
@@ -75,9 +76,11 @@ export default defineComponent({
     };
     const detail = ref({});
     const store = useStore();
+    console.log("1", store);
     const handleFocusDetail = (row: List) => {
       detail.value = row;
-      console.log(store);
+      store.dispatch("risk/onDetailChange", detail);
+      store.dispatch("common/onCollapseChange");
     };
 
     return {

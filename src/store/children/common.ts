@@ -1,6 +1,6 @@
 import { InjectionKey } from "vue";
 import { Module, Store, useStore as baseUseStore } from "vuex";
-import { CommonState, RootState } from "../../types/store"
+import { CommonState, RootState } from "../../types/store";
 
 const common: Module<CommonState, RootState> = {
   namespaced: true,
@@ -10,6 +10,7 @@ const common: Module<CommonState, RootState> = {
   mutations: {
     onCollapseChange(state) {
       state.collapse = !state.collapse;
+      console.log("common", state.collapse);
     },
   },
   actions: {
@@ -17,12 +18,12 @@ const common: Module<CommonState, RootState> = {
       commit("onCollapseChange");
     },
   },
-}
+};
 
-const key: InjectionKey<Store<RootState>> = Symbol()
+const key: InjectionKey<Store<RootState>> = Symbol("common");
 
 export function useStore() {
-  return baseUseStore(key)
+  return baseUseStore(key);
 }
 
-export default common
+export default common;
