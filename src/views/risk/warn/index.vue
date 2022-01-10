@@ -61,7 +61,7 @@
       </el-form>
     </div>
     <div class="warningRang">
-      <el-button type="primary">自定义预警范围</el-button>
+      <el-button type="primary" @click="onCustomRiskRandomChange">自定义预警范围</el-button>
     </div>
     <div class="content">
       <Table is-order-num :column="tableColumn" :list="[...list, ...list, ...list]" :total="6">
@@ -71,6 +71,7 @@
       </Table>
     </div>
     <HandleWarning v-model:show="isHandle.show" @handler="handleWarning" />
+    <CustomRiskRandom v-model:show="isCustomRiskRandom.show" />
   </CommonBox>
 </template>
 
@@ -79,6 +80,7 @@ import { ElForm, ElMessage } from "element-plus";
 import { computed, defineComponent, Ref, ref, watch } from "vue";
 import Table, { TableColumn } from "@/components/table/index.vue";
 import HandleWarning from "./handleWarning.vue";
+import CustomRiskRandom from "./customRiskRandom.vue";
 interface Form {
   companyName: string;
   warningDate: string[];
@@ -101,10 +103,16 @@ interface IsHandle {
   data: object;
   status: string;
 }
+
+interface RiskRondom {
+  show: boolean;
+  data: object;
+}
 export default defineComponent({
   components: {
     Table,
     HandleWarning,
+    CustomRiskRandom,
   },
   setup() {
     const formRef = ref<InstanceType<typeof ElForm>>();
@@ -172,6 +180,14 @@ export default defineComponent({
       ElMessage.success("处理成功");
     };
 
+    const isCustomRiskRandom: Ref<RiskRondom> = ref({
+      show: false,
+      data: {},
+    });
+    const onCustomRiskRandomChange = () => {
+      isCustomRiskRandom.value.show = true;
+    };
+
     return {
       formRef,
       form,
@@ -182,6 +198,8 @@ export default defineComponent({
       handler,
       isHandle,
       handleWarning,
+      isCustomRiskRandom,
+      onCustomRiskRandomChange,
     };
   },
 });
