@@ -54,6 +54,11 @@ const menu: Array<Menu> = [
     path: "/risk",
     children: [
       {
+        title: "企业风险预警",
+        id: "4-2",
+        path: "/risk/warn",
+      },
+      {
         title: "专项计划风险跟踪",
         id: "4-1",
         path: "/risk/check",
