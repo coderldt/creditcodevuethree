@@ -3,80 +3,39 @@
     <el-row :gutter="20">
       <el-col :span="14">
         <Echarts id="platformRegis" :height="300" :options="platformRegis">
-          <el-select
-            v-model="platformRegisVal"
-            size="mini"
-            placeholder="请选择时间"
-          >
-            <el-option
-              v-for="item in selectTimes"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
+          <el-select v-model="platformRegisVal" size="mini" placeholder="请选择时间">
+            <el-option v-for="item in selectTimes" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </Echarts>
       </el-col>
       <el-col :span="10">
-        <Echarts
-          id="antiFraud"
-          :height="300"
-          :emptySize="100"
-          :options="antiFraud"
-        >
-          <el-select
-            v-model="antiFraudTimeVal"
-            size="mini"
-            placeholder="请选择时间"
-          >
-            <el-option
-              v-for="item in selectTimes"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
+        <Echarts id="antiFraud" :height="300" :empty-size="100" :options="antiFraud">
+          <el-select v-model="antiFraudTimeVal" size="mini" placeholder="请选择时间">
+            <el-option v-for="item in selectTimes" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </Echarts>
       </el-col>
       <el-col :span="24">
         <div class="title">反欺诈模型运行结果</div>
-        <el-form
-          ref="formSearch"
-          :inline="true"
-          :model="form"
-          :rules="formRules"
-          class="请输入企业名称"
-        >
+        <el-form ref="formSearch" :inline="true" :model="form" :rules="formRules" class="请输入企业名称">
           <el-row>
             <el-col :span="6">
               <el-form-item prop="enterpriseMame" label="企业名称">
-                <el-input
-                  v-model="form.enterpriseMame"
-                  placeholder="企业名称"
-                ></el-input>
+                <el-input v-model="form.enterpriseMame" placeholder="企业名称" />
               </el-form-item>
             </el-col>
             <el-col :span="7">
               <el-form-item label="命中规则">
                 <el-select v-model="form.hitRule">
-                  <el-option label="全部" value="all"></el-option>
-                  <el-option label="aToB" value="aToB"></el-option>
-                  <el-option label="bToC" value="bToC"></el-option>
+                  <el-option label="全部" value="all" />
+                  <el-option label="aToB" value="aToB" />
+                  <el-option label="bToC" value="bToC" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="7">
               <el-form-item label="调用时间">
-                <el-date-picker
-                  v-model="form.callTime"
-                  type="daterange"
-                  range-separator="To"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                >
-                </el-date-picker>
+                <el-date-picker v-model="form.callTime" type="daterange" range-separator="To" start-placeholder="开始日期" end-placeholder="结束日期" />
               </el-form-item>
             </el-col>
             <el-col :span="4">
@@ -88,56 +47,41 @@
           </el-row>
         </el-form>
         <el-table :data="list" border style="width: 100%">
-          <el-table-column
-            type="index"
-            label="序号"
-            width="50"
-            align="center"
-          />
-          <el-table-column
-            prop="enterpriseMame"
-            label="企业名称"
-            align="center"
-          />
+          <el-table-column type="index" label="序号" width="50" align="center" />
+          <el-table-column prop="enterpriseMame" label="企业名称" align="center" />
           <el-table-column prop="hitRule" label="命中规则" align="center" />
           <el-table-column prop="callTime" label="调用时间" align="center" />
         </el-table>
-        <el-pagination
-          layout="prev, pager, next"
-          v-model:currentPage="pagination.page"
-          @current-change="getList"
-          :total="pagination.total"
-        ></el-pagination>
+        <el-pagination v-model:currentPage="pagination.page" layout="prev, pager, next" :total="pagination.total" @current-change="getList" />
       </el-col>
     </el-row>
   </div>
 </template>
-<script lang="ts" >
-import { ElMessage } from "element-plus";
-import { ElForm, ElFormContext } from 'element-plus';
+<script lang="ts">
+import { ElMessage, ElForm } from "element-plus";
 import { defineComponent, ref, watch, reactive, Ref } from "vue";
 
 interface TimeOptions {
-  label: string,
-  value: string
+  label: string;
+  value: string;
 }
 
 interface Form {
-  enterpriseMame: string,
-  hitRule: string,
-  callTime: string,
+  enterpriseMame: string;
+  hitRule: string;
+  callTime: string;
 }
 
 interface List {
-  enterpriseMame: string,
-  hitRule: string,
-  callTime: string,
+  enterpriseMame: string;
+  hitRule: string;
+  callTime: string;
 }
 
 interface Pagination {
-  total: number,
-  page: number,
-  pageSize: number
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
 export default defineComponent({
@@ -292,7 +236,7 @@ export default defineComponent({
     });
 
     const formSearch = ref<InstanceType<typeof ElForm>>();
-    formSearch.value
+    // formSearch.value;
     const formResetFields = () => {
       formSearch.value?.resetFields();
     };

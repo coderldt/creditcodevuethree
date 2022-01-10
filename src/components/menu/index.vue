@@ -33,6 +33,7 @@ export default defineComponent({
     const router = useRoute();
     const defaultActivePath = ref("");
     setTimeout(() => {
+      console.log(router.path);
       defaultActivePath.value = router.path;
     }, 500);
 

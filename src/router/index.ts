@@ -27,6 +27,11 @@ const routes = [
     component: () => import("@/views/risk/check/index.vue"),
   },
   {
+    path: "/risk/focusDetail",
+    name: "riskFocusDetail",
+    component: () => import("@/views/risk/focus/index.vue"),
+  },
+  {
     path: "/system/user",
     name: "systemUser",
     component: () => import("@/views/system/user/index.vue"),

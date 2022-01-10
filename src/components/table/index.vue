@@ -1,6 +1,7 @@
 <template>
   <div class="tableCom">
     <el-table header-cell-class-name="dark" border highlight-current-row stripe :data="list">
+      <el-table-column v-if="isOrderNum" align="center" label="序号" type="index" width="50" />
       <template v-for="(item, index) in column">
         <el-table-column v-if="item.slot" :key="'slot' + index" :label="item.label" :width="item.width" :align="item.align">
           <template #default="{ row }">
@@ -11,6 +12,7 @@
       </template>
     </el-table>
     <el-pagination
+      v-if="isPagination"
       v-model:currentPage="pagination.page"
       :page-sizes="pagination.pageSizes"
       :total="pagination.total"
@@ -41,6 +43,10 @@ interface Pagination {
 import { defineComponent, reactive, toRefs, PropType } from "vue";
 export default defineComponent({
   props: {
+    isOrderNum: {
+      type: Boolean,
+      default: false,
+    },
     column: {
       type: Object as PropType<TableColumn[]>,
       default: () => ({}),
@@ -52,6 +58,10 @@ export default defineComponent({
     layout: {
       type: String as PropType<string>,
       default: "total, sizes, prev, pager, next, jumper",
+    },
+    isPagination: {
+      type: Boolean,
+      default: true,
     },
     pageSizes: {
       type: Array as PropType<number[]>,

@@ -51,7 +51,7 @@ const menu: Array<Menu> = [
     title: "风险计划",
     icon: "Moon",
     id: "4",
-    path: "",
+    path: "/risk",
     children: [
       {
         title: "专项计划风险跟踪",

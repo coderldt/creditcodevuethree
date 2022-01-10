@@ -1,14 +1,16 @@
 <template>
   <div class="commonBox">
     <div class="title">
+      <el-icon v-if="isBack" class="back" @click="onBackClick"><arrow-left-bold /></el-icon>
       {{ title }}
       <div v-if="isMore" class="more" @click="onMoreClick">{{ moreText }}</div>
     </div>
     <slot></slot>
   </div>
 </template>
-<script>
-import {} from "vue";
+<script lang="ts">
+import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
 export default {
   props: {
     title: {
@@ -16,6 +18,10 @@ export default {
       default: "",
     },
     isMore: {
+      type: Boolean,
+      default: false,
+    },
+    isBack: {
       type: Boolean,
       default: false,
     },
@@ -29,8 +35,14 @@ export default {
     const onMoreClick = () => {
       emit("onMoreClick");
     };
+
+    const router = useRouter();
+    const onBackClick = () => {
+      router.go(-1);
+    };
     return {
       onMoreClick,
+      onBackClick,
     };
   },
 };
@@ -43,10 +55,17 @@ export default {
   background-color: #fff;
 
   .title {
+    display: flex;
+    align-items: center;
     position: relative;
     font-size: 17px;
     font-weight: 700;
     margin-bottom: 15px;
+    .back {
+      margin-right: 10px;
+      cursor: pointer;
+      font-size: 20px;
+    }
   }
 
   .more {
