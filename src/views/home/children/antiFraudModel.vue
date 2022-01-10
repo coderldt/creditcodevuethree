@@ -2,14 +2,14 @@
   <div class="antiFraudModel">
     <el-row :gutter="20">
       <el-col :span="14">
-        <Echarts id="platformRegis" :height="300" :options="platformRegis">
+        <Echarts id="platformRegis" v-loading="loading" :height="300" :options="platformRegis">
           <el-select v-model="platformRegisVal" size="mini" placeholder="请选择时间">
             <el-option v-for="item in selectTimes" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </Echarts>
       </el-col>
       <el-col :span="10">
-        <Echarts id="antiFraud" :height="300" :empty-size="100" :options="antiFraud">
+        <Echarts id="antiFraud" v-loading="loading" :height="300" :empty-size="100" :options="antiFraud">
           <el-select v-model="antiFraudTimeVal" size="mini" placeholder="请选择时间">
             <el-option v-for="item in selectTimes" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
@@ -46,7 +46,7 @@
             </el-col>
           </el-row>
         </el-form>
-        <el-table :data="list" border style="width: 100%">
+        <el-table v-loading="loading" :data="list" border style="width: 100%">
           <el-table-column type="index" label="序号" width="50" align="center" />
           <el-table-column prop="enterpriseMame" label="企业名称" align="center" />
           <el-table-column prop="hitRule" label="命中规则" align="center" />
@@ -273,6 +273,10 @@ export default defineComponent({
     };
     getList();
 
+    const loading = ref(true);
+    setTimeout(() => {
+      loading.value = false;
+    }, 1500);
     return {
       selectTimes,
       platformRegisVal,
@@ -287,6 +291,7 @@ export default defineComponent({
       list,
       pagination,
       getList,
+      loading,
     };
   },
 });

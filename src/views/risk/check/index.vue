@@ -16,7 +16,7 @@
       </el-form>
     </div>
     <div class="content">
-      <Table :column="tableColumn" :total="159" :list="list">
+      <Table v-loading="loading" :column="tableColumn" :total="159" :list="list">
         <template #control="{ row }">
           <el-button type="text" @click="handleRiskDetail(row)"> 查看风险详情 </el-button>
           <el-button type="text" @click="handleFocusDetail(row)"> 查看集中的详情 </el-button>
@@ -84,6 +84,11 @@ export default defineComponent({
       router.push("/risk/focusDetail");
     };
 
+    const loading = ref(true);
+    setTimeout(() => {
+      loading.value = false;
+    }, 1500);
+
     return {
       formRef,
       form,
@@ -92,6 +97,7 @@ export default defineComponent({
       handleRiskDetail,
       handleFocusDetail,
       detail,
+      loading,
     };
   },
 });

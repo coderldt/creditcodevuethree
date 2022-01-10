@@ -64,7 +64,7 @@
       <el-button type="primary" @click="onCustomRiskRandomChange">自定义预警范围</el-button>
     </div>
     <div class="content">
-      <Table is-order-num :column="tableColumn" :list="[...list, ...list, ...list]" :total="6">
+      <Table v-loading="loading" is-order-num :column="tableColumn" :list="[...list, ...list, ...list]" :total="6">
         <template #control="{ row }">
           <el-button type="text" @click="handler(row)">待处理</el-button>
         </template>
@@ -188,6 +188,11 @@ export default defineComponent({
       isCustomRiskRandom.value.show = true;
     };
 
+    const loading = ref(true);
+    setTimeout(() => {
+      loading.value = false;
+    }, 1500);
+
     return {
       formRef,
       form,
@@ -200,6 +205,7 @@ export default defineComponent({
       handleWarning,
       isCustomRiskRandom,
       onCustomRiskRandomChange,
+      loading,
     };
   },
 });
