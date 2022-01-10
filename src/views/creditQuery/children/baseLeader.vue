@@ -12,8 +12,8 @@
 import { defineComponent, Ref, ref } from "vue";
 
 interface Table {
-  name: string,
-  role: string,
+  name: string;
+  role: string;
 }
 
 export default defineComponent({

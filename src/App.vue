@@ -1,5 +1,5 @@
 <template>
-  <Layout></Layout>
+  <Layout />
 </template>
 <script lang="ts">
 import { provide, defineComponent, ref } from "vue";
@@ -14,7 +14,7 @@ interface UserInfo {
 
 export default defineComponent({
   components: {
-    Layout
+    Layout,
   },
   setup() {
     const userInfo: UserInfo = { name: "coderlt" };
@@ -22,6 +22,6 @@ export default defineComponent({
     provide("collapse", collapseHook());
 
     const a = 1;
-  }
+  },
 });
 </script>

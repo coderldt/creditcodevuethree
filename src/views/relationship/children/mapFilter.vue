@@ -9,12 +9,7 @@
         <el-form label-position="top" :model="form" label-width="100px">
           <el-form-item label="拓扑层数">
             <el-select v-model="form.topologicalValue" size="mini">
-              <el-option
-                v-for="(item, index) in topological"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
-              />
+              <el-option v-for="(item, index) in topological" :key="index" :label="item.label" :value="item.value" />
             </el-select>
           </el-form-item>
           <el-form-item label="关系模型">
@@ -26,12 +21,7 @@
             <el-row>
               <el-col :span="10">
                 <el-select v-model="form.sign" size="mini">
-                  <el-option
-                    v-for="item in signList"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  />
+                  <el-option v-for="item in signList" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
               </el-col>
               <el-col :span="12">

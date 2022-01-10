@@ -1,13 +1,6 @@
 <template>
   <div class="cRadioTag">
-    <div
-      class="item"
-      v-for="(item, index) in list"
-      :class="{ isActive: getCurrentItem == item.key }"
-      :key="index"
-      :name="item.key"
-      @click="onItemClick(item.key)"
-    >
+    <div v-for="(item, index) in list" :key="index" class="item" :class="{ isActive: getCurrentItem == item.key }" :name="item.key" @click="onItemClick(item.key)">
       {{ item.label }}
     </div>
   </div>

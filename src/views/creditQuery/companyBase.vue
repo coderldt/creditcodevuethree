@@ -61,7 +61,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const tip: string = "暂无数据";
+    const tip = "暂无数据";
 
     return {
       tip,

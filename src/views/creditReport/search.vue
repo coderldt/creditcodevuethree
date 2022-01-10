@@ -1,18 +1,12 @@
 <template>
   <div class="reportSeatch">
-    <el-form
-      ref="ruleForm"
-      :model="form"
-      label-width="120px"
-      class="demo-ruleForm"
-      inline
-    >
+    <el-form ref="ruleForm" :model="form" label-width="120px" class="demo-ruleForm" inline>
       <!-- :rules="rules" -->
       <el-form-item label="公司全名：" prop="name">
-        <el-input v-model="form.companyName"></el-input>
+        <el-input v-model="form.companyName" />
       </el-form-item>
       <el-form-item label="时间范围：" prop="region">
-        <TimeRange @onSubmit="onSubmit"></TimeRange>
+        <TimeRange @onSubmit="onSubmit" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSearch"> 搜索 </el-button>

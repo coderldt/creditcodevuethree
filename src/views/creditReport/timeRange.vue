@@ -3,7 +3,7 @@
     <span>{{ finalyValue }}</span>
     <el-button type="text" @click="dialogVisible = true">筛选</el-button>
     <el-dialog v-model="dialogVisible" title="时间范围筛选" width="50%" center>
-      <el-tabs tab-position="left" v-model="type" style="height: 200px">
+      <el-tabs v-model="type" tab-position="left" style="height: 200px">
         <el-tab-pane label="固定" name="timePoint">
           <div class="title">时间点：</div>
           <el-radio-group v-model="timePoint">
@@ -16,15 +16,7 @@
         </el-tab-pane>
         <el-tab-pane label="自定义" name="timeCustom">
           <div class="title">区间段：</div>
-          <el-date-picker
-            v-model="timeCustom"
-            type="daterange"
-            range-separator="-"
-            start-placeholder="开始时间"
-            end-placeholder="开始时间"
-            format="YYYY-MM-DD"
-          >
-          </el-date-picker>
+          <el-date-picker v-model="timeCustom" type="daterange" range-separator="-" start-placeholder="开始时间" end-placeholder="开始时间" format="YYYY-MM-DD" />
         </el-tab-pane>
       </el-tabs>
       <template #footer>
@@ -42,9 +34,9 @@ export default defineComponent({
   emits: ["onSubmit"],
   setup(props, { emit }) {
     const dialogVisible: Ref<boolean> = ref(false);
-    const finalyValue: Ref<(string | string[])> = ref("");
+    const finalyValue: Ref<string | string[]> = ref("");
     const timePoint: Ref<string> = ref("");
-    const timeCustom: Ref<string[]>= ref([]);
+    const timeCustom: Ref<string[]> = ref([]);
     const type: Ref<string> = ref("timePoint");
 
     const onSubmit = () => {

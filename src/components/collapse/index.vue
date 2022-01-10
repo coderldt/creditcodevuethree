@@ -1,7 +1,7 @@
 <template>
   <div class="collapse" @click="onCollapseChange">
     <el-icon color="#000" :size="20">
-      <component :is="collapseStatus ? 'fold' : 'expand'"></component>
+      <component :is="collapseStatus ? 'fold' : 'expand'" />
     </el-icon>
   </div>
 </template>

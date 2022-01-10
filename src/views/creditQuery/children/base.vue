@@ -1,14 +1,10 @@
 <template>
   <div class="detailBase">
-    <RadioTag
-      class="tag"
-      :list="tagList"
-      v-model:defaultSelect="defaultSelect"
-    ></RadioTag>
+    <RadioTag v-model:defaultSelect="defaultSelect" class="tag" :list="tagList" />
 
     <!-- <component :is="defaultSelect"></component> -->
-    <BaseBusiness v-show="defaultSelect == 'BaseBusiness'"></BaseBusiness>
-    <BaseLeader v-show="defaultSelect == 'BaseLeader'"></BaseLeader>
+    <BaseBusiness v-show="defaultSelect == 'BaseBusiness'" />
+    <BaseLeader v-show="defaultSelect == 'BaseLeader'" />
   </div>
 </template>
 

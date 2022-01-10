@@ -1,15 +1,12 @@
 <template>
   <div class="searchTemplate">
     <!-- v-model="search" -->
-    <el-input
-      v-model="getSearch"
-      placeholder="请输入企业名称/统一社会信用代码"
-    ></el-input>
-    <el-button @click="onSearch" type="primary">查询</el-button>
+    <el-input v-model="getSearch" placeholder="请输入企业名称/统一社会信用代码" />
+    <el-button type="primary" @click="onSearch">查询</el-button>
     <div class="link">
-      <div class="linkItem" v-for="(item, index) in linkItem" :key="index">
+      <div v-for="(item, index) in linkItem" :key="index" class="linkItem">
         <el-icon @click="onItemClick(item)">
-          <component :is="item.icon"></component>
+          <component :is="item.icon" />
         </el-icon>
         <div class="label" @click="onItemClick(item)">{{ item.label }}</div>
       </div>

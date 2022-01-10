@@ -1,7 +1,7 @@
 <template>
   <div class="logo" @click="backHome">
     <img :src="logoPath" alt="" />
-    <span class="title" v-if="!collapseStatus && title">{{ title }}</span>
+    <span v-if="!collapseStatus && title" class="title">{{ title }}</span>
   </div>
 </template>
 <script>
@@ -10,7 +10,10 @@ import { useRouter } from "vue-router";
 import logo from "@/assets/logo.png";
 export default {
   props: {
-    title: String,
+    title: {
+      type: String,
+      default: "",
+    },
   },
   setup() {
     const { collapseStatus } = inject("collapse");

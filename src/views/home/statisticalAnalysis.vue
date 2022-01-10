@@ -20,12 +20,7 @@
     </div>
     <div class="typeItem">
       <el-tabs v-model="tabsActive">
-        <el-tab-pane
-          v-for="(item, index) in tabs"
-          :key="index"
-          :label="item.label"
-          :name="item.component"
-        >
+        <el-tab-pane v-for="(item, index) in tabs" :key="index" :label="item.label" :name="item.component">
           <component :is="item.component" />
         </el-tab-pane>
       </el-tabs>

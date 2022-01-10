@@ -1,11 +1,7 @@
 <template>
   <div class="echarts">
-    <div :style="{ height: `${height}px` }" :id="id"></div>
-    <el-empty
-      :image-size="emptySize"
-      v-if="isEmpty"
-      description="暂无数据"
-    ></el-empty>
+    <div :id="id" :style="{ height: `${height}px` }"></div>
+    <el-empty v-if="isEmpty" :image-size="emptySize" description="暂无数据" />
     <slot></slot>
   </div>
 </template>

@@ -2,13 +2,7 @@
   <div class="baseBusiness">
     <div class="subTitle">工商照面信息</div>
     <List class="list">
-      <ListItem
-        v-for="(item, index) in list"
-        :key="index"
-        :label="item.label"
-        :value="item.value"
-        :col="item.col"
-      ></ListItem>
+      <ListItem v-for="(item, index) in list" :key="index" :label="item.label" :value="item.value" :col="item.col" />
     </List>
   </div>
 </template>
@@ -17,9 +11,9 @@ import { defineComponent, Ref, ref } from "vue";
 import { List, ListItem } from "@/components/list/";
 
 interface List {
-  label: string,
-  value: string,
-  col: number
+  label: string;
+  value: string;
+  col: number;
 }
 
 export default defineComponent({
