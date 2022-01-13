@@ -8,6 +8,7 @@
 import { inject } from "vue";
 import { useRouter } from "vue-router";
 import logo from "@/assets/logo.png";
+import { collapseKey } from "@/hooks/collapse";
 export default {
   props: {
     title: {
@@ -16,7 +17,7 @@ export default {
     },
   },
   setup() {
-    const { collapseStatus } = inject("collapse");
+    const collapse = inject(collapseKey);
     const router = useRouter();
     const backHome = () => {
       router.push("/home");
@@ -26,7 +27,7 @@ export default {
     return {
       backHome,
       logoPath,
-      collapseStatus,
+      collapseStatus: collapse.collapseStatus,
     };
   },
 };

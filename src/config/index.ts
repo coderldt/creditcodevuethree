@@ -81,4 +81,4 @@ const menu: Array<Menu> = [
   },
 ];
 
-export { config, menu };
+export { config, menu, Menu };

@@ -1,10 +1,11 @@
-<script>
+<script lang="tsx">
 import { defineComponent, resolveComponent, h, inject, ref, nextTick, watch } from "vue";
-import { menu } from "@/config/";
+import { menu, Menu } from "@/config";
 import { useRoute } from "vue-router";
+import { collapseKey } from "@/hooks/collapse";
 export default defineComponent({
   setup() {
-    const baseMenuItem = (props) => {
+    const baseMenuItem = (props: Menu) => {
       return (
         <>
           {props.icon && <el-icon>{h(resolveComponent(props.icon))}</el-icon>}
@@ -13,14 +14,14 @@ export default defineComponent({
       );
     };
 
-    const createItem = (item) => {
+    const createItem = (item: Menu[]) => {
       return item.map((i) => {
         if (i.children && i.children.length > 0) {
           return (
             <el-sub-menu index={i.path}>
               {{
                 title: () => baseMenuItem(i),
-                default: () => createItem(i.children),
+                default: () => createItem(i.children as Menu[]),
               }}
             </el-sub-menu>
           );
@@ -37,10 +38,10 @@ export default defineComponent({
       defaultActivePath.value = router.path;
     }, 500);
 
-    const { collapseStatus } = inject("collapse");
+    const collapse = inject(collapseKey);
     return () => {
       return (
-        <el-menu router default-active={defaultActivePath.value} collapse-transition collapse={collapseStatus.value} class="el-menu-vertical-demo">
+        <el-menu router default-active={defaultActivePath.value} collapse-transition collapse={collapse?.collapseStatus} class="el-menu-vertical-demo">
           {createItem(menu)}
         </el-menu>
       );

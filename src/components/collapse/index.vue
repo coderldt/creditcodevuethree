@@ -7,11 +7,13 @@
 </template>
 <script>
 import { inject } from "vue";
+import { collapseKey } from "@/hooks/collapse";
 export default {
   setup() {
-    const collapseStatus = inject("collapse");
+    const collapseStatus = inject(collapseKey);
     return {
-      ...collapseStatus,
+      collapseStatus: collapseStatus.collapseStatus,
+      onCollapseChange: collapseStatus.onCollapseChange,
     };
   },
 };
