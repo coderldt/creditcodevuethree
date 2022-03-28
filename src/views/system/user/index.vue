@@ -2,7 +2,8 @@
   <div class="userManager commonBox">
     <div class="title">用户管理</div>
     <div class="search">
-      <el-form ref="formRef" :model="form" inline>
+      <From :form="forms" :form-item-list="formList" :label-width="100" />
+      <!-- <el-form ref="formRef" :model="form" inline>
         <el-form-item label="登录账户" prop="loginName">
           <el-input v-model="form.loginName" placeholder="请输入" />
         </el-form-item>
@@ -15,7 +16,7 @@
           <el-button type="primary">查询</el-button>
           <el-button>重置</el-button>
         </el-form-item>
-      </el-form>
+      </el-form> -->
     </div>
     <div class="content">
       <el-row :gutter="20">
@@ -51,11 +52,13 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, ref, watch } from "vue";
+import { defineComponent, onMounted, reactive, Ref, ref, watch } from "vue";
 import { statusList } from "@/config/system";
 import Table, { TableColumn } from "@/components/table/index.vue";
+
 import Edit from "./edit.vue";
 import { ElTree, ElForm } from "element-plus";
+import From, { FormItemList, SelectOptions } from "@/components/form/index.vue";
 
 interface Form {
   loginName: string;
@@ -86,12 +89,65 @@ interface Tree {
   children?: Tree[];
 }
 
+interface Forms {
+  name: string;
+  status: string;
+  createTime: string;
+}
+
 export default defineComponent({
   components: {
     Edit,
     Table,
+    From,
   },
   setup() {
+    const handleChange = (e: Event) => {
+      console.log(11111, e);
+    };
+
+    const forms: Forms = {
+      name: "",
+      status: "",
+      createTime: "",
+    };
+
+    const handleTimeChange = (e: Event) => {
+      console.log(22222, e);
+    };
+
+    // FormItemList 类型不兼容报错
+    const formList: Ref<any[]> = ref([
+      {
+        label: "登录账户",
+        prop: "name",
+        type: "input",
+      },
+      {
+        label: "状态",
+        prop: "status",
+        type: "select",
+        config: {
+          optionList: [
+            { label: "开启", value: "1" },
+            { label: "关闭", value: "2" },
+          ],
+          handleChange,
+        },
+      },
+      {
+        label: "创建时间",
+        prop: "createTime",
+        type: "date",
+        config: {
+          dateType: "daterange",
+          handleChange: (e: any) => (a: any) => {
+            console.log(a, e);
+          },
+        },
+      },
+    ]);
+
     const form: Form = reactive({
       loginName: "",
       status: 0,
@@ -201,6 +257,8 @@ export default defineComponent({
 
     const formRef = ref<InstanceType<typeof ElForm>>();
     return {
+      forms,
+      formList,
       form,
       list,
       statusList,

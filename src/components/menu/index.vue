@@ -2,7 +2,7 @@
 import { defineComponent, resolveComponent, h, inject, ref, nextTick, watch } from "vue";
 import { menu, Menu } from "@/config";
 import { useRoute } from "vue-router";
-import { collapseKey } from "@/hooks/collapse";
+import { collapseStatus } from "@/hooks/collapse";
 export default defineComponent({
   setup() {
     const baseMenuItem = (props: Menu) => {
@@ -34,14 +34,12 @@ export default defineComponent({
     const router = useRoute();
     const defaultActivePath = ref("");
     setTimeout(() => {
-      console.log(router.path);
       defaultActivePath.value = router.path;
     }, 500);
 
-    const collapse = inject(collapseKey);
     return () => {
       return (
-        <el-menu router default-active={defaultActivePath.value} collapse-transition collapse={collapse?.collapseStatus} class="el-menu-vertical-demo">
+        <el-menu router default-active={defaultActivePath.value} collapse={collapseStatus.value} collapse-transition class="el-menu-vertical-demo">
           {createItem(menu)}
         </el-menu>
       );

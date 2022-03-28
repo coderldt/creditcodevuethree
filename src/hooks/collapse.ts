@@ -1,18 +1,9 @@
 import { ref, Ref, InjectionKey } from "vue";
 
-interface Collapse {
-  collapseStatus: boolean;
-  onCollapseChange: () => void;
-}
+const collapseStatus: Ref<boolean> = ref(false);
 
-const collapseKey: InjectionKey<Collapse> = Symbol("collapse");
-
-const collapseHook: Collapse = {
-  collapseStatus: false,
-  onCollapseChange: function () {
-    this.collapseStatus = !this.collapseStatus;
-  },
+const handleCollapse: () => void = () => {
+  collapseStatus.value = !collapseStatus.value;
 };
 
-export { Collapse, collapseKey };
-export default collapseHook;
+export { collapseStatus, handleCollapse };

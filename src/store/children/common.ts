@@ -10,13 +10,12 @@ const common: Module<CommonState, RootState> = {
   mutations: {
     onCollapseChange(state) {
       state.collapse = !state.collapse;
-      console.log("common", state.collapse);
     },
   },
   actions: {
-    onCollapseChange({ commit }) {
-      commit("onCollapseChange");
-    },
+    // onCollapseChange({ commit }) {
+    //   commit("onCollapseChange");
+    // },
   },
 };
 

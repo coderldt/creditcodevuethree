@@ -4,11 +4,10 @@
     <span v-if="!collapseStatus && title" class="title">{{ title }}</span>
   </div>
 </template>
-<script>
-import { inject } from "vue";
+<script lang="ts">
 import { useRouter } from "vue-router";
 import logo from "@/assets/logo.png";
-import { collapseKey } from "@/hooks/collapse";
+import { collapseStatus } from "@/hooks/collapse";
 export default {
   props: {
     title: {
@@ -17,7 +16,6 @@ export default {
     },
   },
   setup() {
-    const collapse = inject(collapseKey);
     const router = useRouter();
     const backHome = () => {
       router.push("/home");
@@ -27,7 +25,7 @@ export default {
     return {
       backHome,
       logoPath,
-      collapseStatus: collapse.collapseStatus,
+      collapseStatus,
     };
   },
 };

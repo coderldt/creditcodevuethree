@@ -20,7 +20,7 @@ import Logo from "@/components/logo/index.vue";
 import Header from "./header.vue";
 import Menu from "@/components/menu/index.vue";
 import { config } from "@/config";
-import { collapseKey } from "@/hooks/collapse";
+import { collapseStatus } from "@/hooks/collapse";
 export default {
   components: {
     Header,
@@ -29,10 +29,9 @@ export default {
   },
   setup() {
     const configData = config;
-    const collapse = inject(collapseKey);
 
     const getCommonWidth = computed(() => {
-      return collapse.collapseStatus ? "63px" : "200px";
+      return collapseStatus.value ? "63px" : "200px";
     });
 
     return {
