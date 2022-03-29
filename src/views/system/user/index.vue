@@ -2,7 +2,7 @@
   <div class="userManager commonBox">
     <div class="title">用户管理</div>
     <div class="search">
-      <From :form="forms" :form-item-list="formList" :label-width="100" />
+      <From v-model:form="forms" :rules="rules" :form-item-list="formList" :label-width="100" />
       <!-- <el-form ref="formRef" :model="form" inline>
         <el-form-item label="登录账户" prop="loginName">
           <el-input v-model="form.loginName" placeholder="请输入" />
@@ -58,7 +58,8 @@ import Table, { TableColumn } from "@/components/table/index.vue";
 
 import Edit from "./edit.vue";
 import { ElTree, ElForm } from "element-plus";
-import From, { FormItemList, SelectOptions } from "@/components/form/index.vue";
+import From from "@/components/form/index.vue";
+// import From, { FormItemList, SelectOptions } from "@/components/form/index.vue";
 
 interface Form {
   loginName: string;
@@ -102,19 +103,27 @@ export default defineComponent({
     From,
   },
   setup() {
-    const handleChange = (e: Event) => {
+    const handleStatusChange = (e: Event) => {
       console.log(11111, e);
     };
-
-    const forms: Forms = {
-      name: "",
-      status: "",
-      createTime: "",
-    };
-
     const handleTimeChange = (e: Event) => {
       console.log(22222, e);
     };
+
+    const forms: Ref<Forms> = ref({
+      name: "",
+      status: "",
+      createTime: "",
+    });
+
+    const rules = ref({
+      name: [
+        { required: true, message: "Please input Activity name", trigger: "blur" },
+        { min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur" },
+      ],
+      status: [{ required: true, message: "Please input Activity name", trigger: "blur" }],
+      createTime: [{ required: true, message: "Please input Activity name", trigger: "blur" }],
+    });
 
     // FormItemList 类型不兼容报错
     const formList: Ref<any[]> = ref([
@@ -132,7 +141,7 @@ export default defineComponent({
             { label: "开启", value: "1" },
             { label: "关闭", value: "2" },
           ],
-          handleChange,
+          handleChange: handleStatusChange,
         },
       },
       {
@@ -141,9 +150,7 @@ export default defineComponent({
         type: "date",
         config: {
           dateType: "daterange",
-          handleChange: (e: any) => (a: any) => {
-            console.log(a, e);
-          },
+          handleChange: handleTimeChange,
         },
       },
     ]);
@@ -262,6 +269,7 @@ export default defineComponent({
       form,
       list,
       statusList,
+      rules,
       edit,
       del,
       rePass,

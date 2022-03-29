@@ -1,6 +1,6 @@
 <template>
   <div class="Form">
-    <el-form :model="form" :label-width="formConfig.labelWidth">
+    <el-form ref="formRef" :model="formData" :rules="rules" :label-width="formConfig.labelWidth">
       <el-row :gutter="24">
         <el-col v-for="(item, index) in formItemList" :key="index" :span="item.span || 6">
           <el-form-item :label="item.label" :props="item.prop">
@@ -9,7 +9,7 @@
                 v-model="formData[item.prop]"
                 :placeholder="item.render && item.config?.placeholder ? item.config.placeholder : INPUT_PLACEHOLDER"
                 v-bind="item?.config?.columnConfig || {}"
-                @change="item?.config?.handleChange() || undefined"
+                @input="(e) => handleInputChange(e, item)"
               />
             </template>
 
@@ -20,7 +20,7 @@
                 clearable
                 :placeholder="item?.config?.placeholder || SELECT_PLACEHOLDER"
                 v-bind="item?.config?.columnConfig || {}"
-                @change="item?.config?.handleChange ? item?.config?.handleChange : undefined"
+                @change="(e) => handleChange(e, item)"
               >
                 <el-option v-for="(i, idx) in item?.config?.optionList || []" :key="idx" :label="i.label" :value="i.value" />
               </el-select>
@@ -37,23 +37,25 @@
                 :start-placeholder="item?.config?.dateStartPlaceHolder || DATE_START_PLACEHOLDER"
                 :end-placeholder="item?.config?.dateEndPlaceHolder || DATE_END_PLACEHOLDER"
                 v-bind="item?.config?.columnConfig || {}"
-                @change="item?.config?.handleChange ? item?.config?.handleChange : undefined"
+                @change="(e) => handleChange(e, item)"
               />
             </template>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary">搜索</el-button>
-            <el-button>重置</el-button>
-          </el-form-item>
         </el-col>
+        <el-form-item>
+          <el-button type="primary" @click="handleSubmit">搜索</el-button>
+          <el-button @click="handleReset(formRef)">重置</el-button>
+        </el-form-item>
       </el-row>
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, Ref, ref, watch } from "vue";
+import { defineComponent, PropType, Ref, ref, toRefs, watch } from "vue";
 import * as distConfig from "@/config/dist";
+import { ElForm } from "element-plus";
+// import type { FormInstance } from "element-plus";
 export interface SelectOptions {
   label: string;
   value: string;
@@ -115,8 +117,12 @@ export default defineComponent({
       type: Number,
       default: 100,
     },
+    rules: {
+      type: Object,
+      default: () => ({}),
+    },
   },
-  emits: ["update:form"],
+  emits: ["update:form", "submit", "reset"],
   setup(props, { emit }) {
     const formData = ref({ ...props.form });
 
@@ -130,9 +136,47 @@ export default defineComponent({
       }
     );
 
+    const formRef = ref<InstanceType<typeof ElForm>>();
+
+    const handleInputChange = (e: any, item: FormItemList) => {
+      if (item?.config?.handleChange) {
+        item.config.handleChange(e);
+      }
+    };
+
+    const handleChange = (e: any, item: FormItemList) => {
+      if (item?.config?.handleChange) {
+        item.config.handleChange(e);
+      }
+    };
+
+    const handleSubmit = () => {
+      emit("submit");
+    };
+
+    const handleReset = (formElForm: any) => {
+      console.log(formElForm.resetFields);
+
+      if (!formElForm) return;
+      formRef.value?.resetFields();
+      formElForm.resetFields();
+    };
+    // const handleReset = () => {
+    //   if (!formRef) return;
+    //   console.log(formRef.value?.resetFields, formRef.value);
+
+    //   formRef.value?.resetFields();
+    //   emit("reset");
+    // };
+
     return {
       ...distConfig,
+      formRef,
       formData,
+      handleInputChange,
+      handleChange,
+      handleSubmit,
+      handleReset,
     };
   },
 });
@@ -143,6 +187,14 @@ export default defineComponent({
   .el-input,
   .el-select,
   .el-date-picker {
+    width: 100%;
+  }
+}
+</style>
+
+<style lang="less">
+.Form {
+  .el-date-editor {
     width: 100%;
   }
 }
