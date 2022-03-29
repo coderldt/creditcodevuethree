@@ -2,53 +2,39 @@
   <div class="userManager commonBox">
     <div class="title">用户管理</div>
     <div class="search">
-      <From v-model:form="forms" :rules="rules" :form-item-list="formList" :label-width="100" />
-      <!-- <el-form ref="formRef" :model="form" inline>
-        <el-form-item label="登录账户" prop="loginName">
-          <el-input v-model="form.loginName" placeholder="请输入" />
-        </el-form-item>
-        <el-form-item label="状态" prop="status">
-          <el-select v-model="form.status">
-            <el-option v-for="item in statusList" :key="item.key" :label="item.value" :value="item.key" />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary">查询</el-button>
-          <el-button>重置</el-button>
-        </el-form-item>
-      </el-form> -->
+      <From v-model:form="form" :form-item-list="formList" @submit="handleSubmit" />
+      <div class="content">
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="tree">
+              <el-input v-model="filterText" placeholder="请输入关键字" />
+              <el-tree ref="treeRef" class="filter-tree" :data="data" :props="defaultProps" :filter-node-method="filterNode" />
+            </div>
+          </el-col>
+          <el-col :span="18">
+            <Table :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
+              <template #status="{ row }">
+                <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
+              </template>
+              <template #control="{ row }">
+                <el-button type="text" @click="edit(row)"> 编辑 </el-button>
+                <el-popconfirm title="是否要删除所选项" @confirm="del(row)">
+                  <template #reference>
+                    <el-button type="text">删除</el-button>
+                  </template>
+                </el-popconfirm>
+                <el-popconfirm title="是否要删除所选项" @confirm="rePass(row)">
+                  <template #reference>
+                    <el-button type="text">重置密码</el-button>
+                  </template>
+                </el-popconfirm>
+              </template>
+            </Table>
+          </el-col>
+        </el-row>
+      </div>
+      <Edit v-model:dialogVisible="dialog.isEdit" :data="dialog.data" />
     </div>
-    <div class="content">
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <div class="tree">
-            <el-input v-model="filterText" placeholder="请输入关键字" />
-            <el-tree ref="treeRef" class="filter-tree" :data="data" :props="defaultProps" :filter-node-method="filterNode" />
-          </div>
-        </el-col>
-        <el-col :span="18">
-          <Table :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
-            <template #status="{ row }">
-              <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
-            </template>
-            <template #control="{ row }">
-              <el-button type="text" @click="edit(row)"> 编辑 </el-button>
-              <el-popconfirm title="是否要删除所选项" @confirm="del(row)">
-                <template #reference>
-                  <el-button type="text">删除</el-button>
-                </template>
-              </el-popconfirm>
-              <el-popconfirm title="是否要删除所选项" @confirm="rePass(row)">
-                <template #reference>
-                  <el-button type="text">重置密码</el-button>
-                </template>
-              </el-popconfirm>
-            </template>
-          </Table>
-        </el-col>
-      </el-row>
-    </div>
-    <Edit v-model:dialogVisible="dialog.isEdit" :data="dialog.data" />
   </div>
 </template>
 <script lang="ts">
@@ -58,13 +44,7 @@ import Table, { TableColumn } from "@/components/table/index.vue";
 
 import Edit from "./edit.vue";
 import { ElTree, ElForm } from "element-plus";
-import From from "@/components/form/index.vue";
-// import From, { FormItemList, SelectOptions } from "@/components/form/index.vue";
-
-interface Form {
-  loginName: string;
-  status: number | string;
-}
+import From, { FormItem } from "@/components/form/form.vue";
 
 export interface List {
   id?: string;
@@ -103,30 +83,13 @@ export default defineComponent({
     From,
   },
   setup() {
-    const handleStatusChange = (e: Event) => {
-      console.log(11111, e);
-    };
-    const handleTimeChange = (e: Event) => {
-      console.log(22222, e);
-    };
-
-    const forms: Ref<Forms> = ref({
+    const form: Ref<Forms> = ref({
       name: "",
       status: "",
       createTime: "",
     });
 
-    const rules = ref({
-      name: [
-        { required: true, message: "Please input Activity name", trigger: "blur" },
-        { min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur" },
-      ],
-      status: [{ required: true, message: "Please input Activity name", trigger: "blur" }],
-      createTime: [{ required: true, message: "Please input Activity name", trigger: "blur" }],
-    });
-
-    // FormItemList 类型不兼容报错
-    const formList: Ref<any[]> = ref([
+    const formList: Ref<FormItem[]> = ref([
       {
         label: "登录账户",
         prop: "name",
@@ -141,7 +104,6 @@ export default defineComponent({
             { label: "开启", value: "1" },
             { label: "关闭", value: "2" },
           ],
-          handleChange: handleStatusChange,
         },
       },
       {
@@ -150,15 +112,13 @@ export default defineComponent({
         type: "date",
         config: {
           dateType: "daterange",
-          handleChange: handleTimeChange,
         },
       },
     ]);
 
-    const form: Form = reactive({
-      loginName: "",
-      status: 0,
-    });
+    const handleSubmit = () => {
+      console.log(form.value);
+    };
 
     const total = ref(50);
     const onPaginationChange = (Object: Object) => {
@@ -264,12 +224,10 @@ export default defineComponent({
 
     const formRef = ref<InstanceType<typeof ElForm>>();
     return {
-      forms,
-      formList,
       form,
+      formList,
       list,
       statusList,
-      rules,
       edit,
       del,
       rePass,
@@ -283,6 +241,7 @@ export default defineComponent({
       onPaginationChange,
       tableColumn,
       formRef,
+      handleSubmit,
     };
   },
 });
