@@ -4,14 +4,7 @@
       <el-row :gutter="24">
         <!-- 固定 -->
         <el-col v-for="(item, index) in getFormItemList[0]" :key="index" :span="item.span || 6">
-          <template v-if="item.slot">
-            <el-form-item :label="item.label" :prop="item.prop">
-              <slot :name="item.slot" :row="item.config"></slot>
-            </el-form-item>
-          </template>
-          <template v-else>
-            <FormItem :item="item" />
-          </template>
+          <FormItem :item="item" />
         </el-col>
         <!-- 显示隐藏 -->
         <el-col v-for="(item, index) in getFormItemList[1]" v-show="isMoreSearch" :key="index" :span="item.span || 6">

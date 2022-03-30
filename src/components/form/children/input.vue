@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, PropType } from "vue";
+import { defineComponent, inject, PropType, useSlots } from "vue";
 import * as distConfig from "@/config/dist";
 import { FormItem } from "../form.vue";
 
@@ -21,7 +21,7 @@ export default defineComponent({
       default: () => ({}),
     },
   },
-  setup() {
+  setup(props, { slots }) {
     const formData = inject("formData");
 
     const handleInputChange = (e: Event, item: FormItem) => {

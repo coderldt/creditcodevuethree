@@ -5,12 +5,22 @@
   </div>
 </template>
 <script>
+import { number } from "echarts";
 import { defineComponent } from "vue";
 export default defineComponent({
   props: {
-    label: String,
-    value: String,
-    col: Number,
+    label: {
+      type: String,
+      default: "",
+    },
+    value: {
+      type: String,
+      default: "",
+    },
+    col: {
+      type: number,
+      default: 4,
+    },
   },
   setup() {},
 });
