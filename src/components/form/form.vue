@@ -2,13 +2,17 @@
   <div class="Form">
     <el-form ref="formRef" :model="formData" :rules="rules" :label-width="formConfig.labelWidth">
       <el-row :gutter="24">
-        <!-- 固定 -->
-        <el-col v-for="(item, index) in getFormItemList[0]" :key="index" :span="item.span || 6">
-          <FormItem :item="item" />
-        </el-col>
-        <!-- 显示隐藏 -->
-        <el-col v-for="(item, index) in getFormItemList[1]" v-show="isMoreSearch" :key="index" :span="item.span || 6">
-          <FormItem :item="item" />
+        <el-col v-for="(item, index) in getFormItemList" :key="index" :span="item.span || 6">
+          <el-form-item :label="item.label" :prop="item.prop">
+            <template v-if="item.slot">
+              <slot :name="item.slot" :item="item.config"></slot>
+            </template>
+            <template v-else>
+              <FormInput v-if="item.type === 'input'" :item="item" />
+              <FormSelect v-else-if="item.type === 'select'" :item="item" />
+              <FormDatePicker v-else-if="item.type === 'date'" :item="item" />
+            </template>
+          </el-form-item>
         </el-col>
         <el-form-item>
           <el-button v-if="formConfig.isSearch" type="primary" @click="handleSubmit">搜索</el-button>
@@ -25,7 +29,9 @@ import { computed, defineComponent, PropType, provide, Ref, ref, toRefs, watch }
 import * as distConfig from "@/config/dist";
 import { ElForm, ElMessage } from "element-plus";
 import { Config, FormButtonList } from "./index";
-import FormItem from "./formItem.vue";
+import FormInput from "./children/input.vue";
+import FormSelect from "./children/select.vue";
+import FormDatePicker from "./children/datePicker.vue";
 
 export interface FormItem {
   label: string;
@@ -46,7 +52,9 @@ export interface FormConfig {
 
 export default defineComponent({
   components: {
-    FormItem,
+    FormInput,
+    FormSelect,
+    FormDatePicker,
   },
   props: {
     form: {
@@ -72,12 +80,14 @@ export default defineComponent({
   },
   emits: ["update:form", "submit", "reset"],
   setup(props, { emit }) {
-    const { formItemList } = toRefs(props);
-    const formData = ref({ ...props.form });
-    provide("formData", formData);
+    const { formItemList, form } = toRefs(props);
+    // const formData = ref({ ...form });
+    provide("formData", form);
     watch(
-      formData,
+      form,
       (val) => {
+        console.log(val);
+
         emit("update:form", val);
       },
       {
@@ -85,7 +95,7 @@ export default defineComponent({
       }
     );
 
-    const isMoreSearch: Ref<Boolean> = ref(true);
+    const isMoreSearch: Ref<Boolean> = ref(false);
     const handleSearchStatus = () => {
       isMoreSearch.value = !isMoreSearch.value;
     };
@@ -95,8 +105,11 @@ export default defineComponent({
 
     // 切分需要用隐藏的表单
     const getFormItemList = computed(() => {
-      const res = [formItemList.value.slice(0, 3), formItemList.value.slice(3)];
-      return res;
+      if (isMoreSearch.value) {
+        return formItemList.value;
+      } else {
+        return formItemList.value.slice(0, 3);
+      }
     });
 
     const formRef = ref<InstanceType<typeof ElForm>>();
@@ -116,7 +129,7 @@ export default defineComponent({
     return {
       ...distConfig,
       formRef,
-      formData,
+      formData: form,
       getFormItemList,
       handleSubmit,
       handleReset,
@@ -128,20 +141,14 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
-.Form {
-  .el-input,
-  .el-select,
-  .el-date-picker {
-    width: 100%;
-  }
-}
-</style>
+<style lang="less" scoped></style>
 
 <style lang="less">
 .Form {
+  .el-input,
   .el-select,
-  .el-date-editor {
+  .el-date-editor,
+  .el-date-picker {
     width: 100%;
   }
 }

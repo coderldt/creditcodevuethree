@@ -85,6 +85,7 @@ export default defineComponent({
   setup() {
     const form: Ref<Forms> = ref({
       name: "",
+      name1: "",
       status: "",
       createTime: "",
     });
