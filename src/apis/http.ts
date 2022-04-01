@@ -26,11 +26,11 @@ const ajax: AxiosInstance = axios.create({
 
 // 请求拦截器，内部根据返回值，重新组装，统一管理。
 axios.interceptors.response.use((res) => {
-  console.log(res, typeof res.data !== "object");
-  if (typeof res.data !== "object") {
+  if (res.status !== 200) {
     ElMessage.error("服务端异常！");
     return Promise.reject(res);
   }
+
   if (res.data.code !== 200) {
     if (res.data.message) ElMessage.error(res.data.msg);
     if (res.data.code === 419) {
@@ -39,7 +39,7 @@ axios.interceptors.response.use((res) => {
     return Promise.reject(res.data);
   }
 
-  return res.data.data;
+  return res.data;
 });
 
 const http = {
@@ -53,7 +53,6 @@ const http = {
     if (query) {
       query = query.slice(0, -1);
     }
-    console.log(111, url, this);
 
     return this.http({ url: `${url}?${query}`, headers });
   },
@@ -63,14 +62,14 @@ const http = {
   },
   http: (param: Params): AxiosPromise<object> => {
     const { method = "GET", url, data, headers = {}, params } = param;
-    console.log(2);
 
     return new Promise((resolve, reject) => {
-      headers["token"] = getStore("token") || "";
-      return ajax
+      const token = getStore("token");
+      token && (headers["token"] = getStore("token"));
+      return axios
         .request({
           method,
-          url,
+          url: `/api${url}`,
           data,
           headers,
           params,

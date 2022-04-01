@@ -8,11 +8,11 @@
           <el-col :span="6">
             <div class="tree">
               <el-input v-model="filterText" placeholder="请输入关键字" />
-              <el-tree ref="treeRef" class="filter-tree" :data="data" :props="defaultProps" :filter-node-method="filterNode" />
+              <el-tree ref="treeRef" class="filter-tree" :data="treeData" :props="defaultProps" :filter-node-method="filterNode" />
             </div>
           </el-col>
           <el-col :span="18">
-            <Table :column="tableColumn" :list="list" :total="total" @onPaginationChange="onPaginationChange">
+            <Table :column="tableColumn" :list="data.list" :total="data.total" @onPaginationChange="onPaginationChange">
               <template #status="{ row }">
                 <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
               </template>
@@ -38,13 +38,17 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, Ref, ref, watch } from "vue";
+import { defineComponent, onMounted, reactive, Ref, ref, toRefs, watch } from "vue";
 import { statusList } from "@/config/system";
 import Table, { TableColumn } from "@/components/table/index.vue";
 
 import Edit from "./edit.vue";
 import { ElTree, ElForm } from "element-plus";
 import From, { FormItem } from "@/components/form/form.vue";
+
+import { getList } from "@/apis/system/user";
+
+import useTable from "@/hooks/useTable";
 
 export interface List {
   id?: string;
@@ -90,6 +94,9 @@ export default defineComponent({
       createTime: "",
     });
 
+    const { data, getList: getApiList } = useTable({ api: getList, params: { ...form } });
+    console.log(data);
+
     const formList: Ref<FormItem[]> = ref([
       {
         label: "登录账户",
@@ -118,10 +125,10 @@ export default defineComponent({
     ]);
 
     const handleSubmit = () => {
-      console.log(form.value);
+      getApiList();
     };
 
-    const total = ref(50);
+    // const total = ref(50);
     const onPaginationChange = (Object: Object) => {
       console.log(Object);
     };
@@ -135,27 +142,6 @@ export default defineComponent({
       { label: "邮箱", prop: "email", width: "", align: "center" },
       { label: "操作", align: "center", slot: "control" },
     ];
-
-    const list: List[] = reactive([
-      {
-        id: "1234567890",
-        loginName: "admin",
-        userName: "lc",
-        status: 1,
-        createTime: "2021-12-31 12:12:12",
-        phone: "18712345678",
-        email: "19@gmail.com",
-      },
-      {
-        id: "1234567890",
-        loginName: "admin",
-        userName: "tt",
-        status: 1,
-        createTime: "2021-12-31 13:13:13",
-        phone: "187",
-        email: "19699@gmail.com",
-      },
-    ]);
 
     const dialog: Dialog = reactive({
       isEdit: false,
@@ -188,7 +174,7 @@ export default defineComponent({
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     };
-    const data: Tree[] = [
+    const treeData: Tree[] = [
       {
         id: "1",
         label: "中建资本控股有限公司",
@@ -225,19 +211,21 @@ export default defineComponent({
 
     const formRef = ref<InstanceType<typeof ElForm>>();
     return {
+      isLoading: false,
       form,
       formList,
-      list,
+      list: [],
       statusList,
+      data,
       edit,
       del,
       rePass,
       dialog,
-      data,
+      treeData,
       filterText,
       treeRef,
       defaultProps,
-      total,
+      total: 20,
       filterNode,
       onPaginationChange,
       tableColumn,
