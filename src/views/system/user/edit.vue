@@ -1,50 +1,19 @@
 <template>
   <el-dialog v-model="isOpen" title="编辑" width="50%">
-    <el-form ref="ruleFormRef" :rules="rules" label-width="100px" :model="form">
-      <el-form-item label="登录账号" prop="loginName">
-        <el-input v-model="form.loginName" placeholder="请输入" disabled />
-      </el-form-item>
-      <el-form-item label="用户昵称" prop="userName">
-        <el-input v-model="form.userName" placeholder="请输入" disabled />
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="form.status" style="width: 100%">
-          <el-option v-for="item in statusList" :key="item.key" :label="item.value" :value="item.key" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="手机号" prop="phone">
-        <el-input v-model="form.phone" placeholder="请输入" disabled />
-      </el-form-item>
-      <el-form-item label="部门" prop="status">
-        <el-select v-model="form.status" style="width: 100%">
-          <el-option v-for="item in statusList" :key="item.key" :label="item.value" :value="item.key" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="角色" prop="roleId">
-        <el-select v-model="form.roleId" style="width: 100%">
-          <el-option v-for="item in statusList" :key="item.key" :label="item.value" :value="item.key" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="form.email" placeholder="请输入" disabled />
-      </el-form-item>
-      <el-form-item label="描述" prop="desc">
-        <el-input v-model="form.desc" type="textarea" placeholder="请输入" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submit">保存</el-button>
-        <el-button @click="isOpen = false">取消</el-button>
-      </el-form-item>
-    </el-form>
+    <Form :form="form" :form-item-list="formItemList" :is-show-more-button="false" />
   </el-dialog>
 </template>
 <script lang="ts">
 import { computed, defineComponent, Ref, ref, toRefs, watch, reactive } from "vue";
 import { statusList } from "@/config/system";
+import Form, { FormItem } from "@/components/form/form.vue";
 import { List } from "./index.vue";
 import { ElForm } from "element-plus";
 
 export default defineComponent({
+  components: {
+    Form,
+  },
   props: {
     dialogVisible: {
       type: Boolean,
@@ -71,10 +40,21 @@ export default defineComponent({
     });
     watch(isOpen, (val) => {
       formReset();
-      form.value = { ...form.value, ...data.value };
+      form = { ...form, ...data.value };
     });
 
-    let form: Ref<List> = ref({
+    const formItemList: FormItem[] = reactive([
+      { label: "登录账号", prop: "loginName", type: "input", span: 24, disabled: true },
+      { label: "用户昵称", prop: "userName", type: "input", span: 24, disabled: true },
+      { label: "状态", prop: "status", type: "select", config: { optionList: statusList }, span: 24 },
+      { label: "手机号", prop: "phone", type: "input", span: 24, disabled: true },
+      { label: "部门", prop: "status", type: "select", config: { optionList: statusList }, span: 24 },
+      { label: "角色", prop: "roleId", type: "select", config: { optionList: statusList }, span: 24 },
+      { label: "邮箱", prop: "email", type: "input", span: 24, disabled: true },
+      { label: "描述", prop: "desc", type: "input", span: 24, disabled: true },
+    ]);
+
+    let form: List = reactive({
       id: "",
       loginName: "",
       userName: "",
@@ -94,7 +74,7 @@ export default defineComponent({
       email: [{ required: true, message: "邮箱不可为空", trigger: "blur" }],
     });
     const formReset = (): void => {
-      form.value = {
+      form = {
         id: "",
         loginName: "",
         userName: "",
@@ -112,7 +92,7 @@ export default defineComponent({
       console.log(ruleFormRef.value);
 
       ruleFormRef.value?.validate((res) => {
-        console.log(res, form.value);
+        console.log(res, form);
       });
     };
 
@@ -123,6 +103,7 @@ export default defineComponent({
       rules,
       submit,
       ruleFormRef,
+      formItemList,
     };
   },
 });

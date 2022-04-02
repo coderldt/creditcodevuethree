@@ -2,7 +2,7 @@
   <div class="userManager commonBox">
     <div class="title">用户管理</div>
     <div class="search">
-      <From v-model:form="form" :form-item-list="formList" @submit="handleSubmit" />
+      <From v-model:form="form" :form-item-list="formList" @submit="getApiList" @reset="getApiList" />
       <div class="content">
         <el-row :gutter="20">
           <el-col :span="6">
@@ -12,7 +12,7 @@
             </div>
           </el-col>
           <el-col :span="18">
-            <Table :column="tableColumn" :list="data.list" :total="data.total" @onPaginationChange="onPaginationChange">
+            <Table :column="tableColumn" :list="data.list" :total="data.total" @onPaginationChange="handlePagintion">
               <template #status="{ row }">
                 <el-switch v-model="row.status" :active-value="1" :inactive-value="2" />
               </template>
@@ -38,12 +38,12 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, Ref, ref, toRefs, watch } from "vue";
+import { defineComponent, reactive, Ref, ref, watch } from "vue";
 import { statusList } from "@/config/system";
 import Table, { TableColumn } from "@/components/table/index.vue";
 
 import Edit from "./edit.vue";
-import { ElTree, ElForm } from "element-plus";
+import { ElTree } from "element-plus";
 import From, { FormItem } from "@/components/form/form.vue";
 
 import { getList } from "@/apis/system/user";
@@ -87,15 +87,11 @@ export default defineComponent({
     From,
   },
   setup() {
-    const form: Ref<Forms> = ref({
+    const formOptions: Forms = {
       name: "",
-      name1: "",
       status: "",
       createTime: "",
-    });
-
-    const { data, getList: getApiList } = useTable({ api: getList, params: { ...form } });
-    console.log(data);
+    };
 
     const formList: Ref<FormItem[]> = ref([
       {
@@ -124,14 +120,7 @@ export default defineComponent({
       },
     ]);
 
-    const handleSubmit = () => {
-      getApiList();
-    };
-
-    // const total = ref(50);
-    const onPaginationChange = (Object: Object) => {
-      console.log(Object);
-    };
+    const { data, getList: getApiList, handlePagintion, form } = useTable({ api: getList, form: formOptions });
 
     const tableColumn: TableColumn[] = [
       { label: "登录账号", prop: "loginName", width: "", align: "center" },
@@ -143,10 +132,6 @@ export default defineComponent({
       { label: "操作", align: "center", slot: "control" },
     ];
 
-    const dialog: Dialog = reactive({
-      isEdit: false,
-      data: {},
-    });
     const edit = (row: List): void => {
       dialog.isEdit = true;
       dialog.data = row;
@@ -158,6 +143,10 @@ export default defineComponent({
       console.log("重置密码", row.id);
     };
 
+    const dialog: Dialog = reactive({
+      isEdit: false,
+      data: {},
+    });
     // 职位筛选
     const filterText = ref("");
     const treeRef = ref<InstanceType<typeof ElTree>>();
@@ -209,12 +198,12 @@ export default defineComponent({
       },
     ];
 
-    const formRef = ref<InstanceType<typeof ElForm>>();
     return {
       isLoading: false,
       form,
       formList,
       list: [],
+      getApiList,
       statusList,
       data,
       edit,
@@ -227,10 +216,8 @@ export default defineComponent({
       defaultProps,
       total: 20,
       filterNode,
-      onPaginationChange,
       tableColumn,
-      formRef,
-      handleSubmit,
+      handlePagintion,
     };
   },
 });

@@ -5,6 +5,7 @@
       :type="item?.config?.dateType || DATE_FORMAT"
       :value-format="item?.config?.dateValueFormat || DATE_VALUE_FORMAT"
       unlink-panels
+      :disabled="item.disabled || false"
       range-separator="至"
       :placeholder="item?.config?.placeholder || DATE_PLACEHOLDER"
       :start-placeholder="item?.config?.dateStartPlaceHolder || DATE_START_PLACEHOLDER"

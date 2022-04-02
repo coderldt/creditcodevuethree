@@ -10,3 +10,12 @@ export const INPUT_PLACEHOLDER = "请输入";
 
 // select
 export const SELECT_PLACEHOLDER = "请选择状态";
+
+// form
+export const DEFAULT_FORM = {};
+export const DEFAULT_PAGE = {
+  page: 1,
+  pageSize: 10,
+  pageSizes: [10, 20, 50, 100],
+  total: 0,
+};

@@ -38,6 +38,7 @@ export interface FormItem {
   prop: string;
   // "input" | "select" | "date"
   type: string;
+  disabled?: boolean;
   span?: number;
   slot?: string;
   config?: Config;
@@ -77,17 +78,18 @@ export default defineComponent({
       type: Object,
       default: () => ({}),
     },
+    isShowMoreButton: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ["update:form", "submit", "reset"],
   setup(props, { emit }) {
     const { formItemList, form } = toRefs(props);
-    // const formData = ref({ ...form });
     provide("formData", form);
     watch(
       form,
       (val) => {
-        console.log(val);
-
         emit("update:form", val);
       },
       {
@@ -100,11 +102,14 @@ export default defineComponent({
       isMoreSearch.value = !isMoreSearch.value;
     };
     const getShowMoreButton = computed(() => {
-      return formItemList.value.length >= 4;
+      return props.isShowMoreButton && formItemList.value.length >= 4;
     });
 
     // 切分需要用隐藏的表单
     const getFormItemList = computed(() => {
+      if (!getShowMoreButton.value) {
+        return formItemList.value;
+      }
       if (isMoreSearch.value) {
         return formItemList.value;
       } else {

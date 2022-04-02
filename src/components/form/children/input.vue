@@ -4,6 +4,7 @@
       v-model="formData[item.prop]"
       :placeholder="item.render && item.config?.placeholder ? item.config.placeholder : INPUT_PLACEHOLDER"
       v-bind="item?.config?.columnConfig || {}"
+      :disabled="item.disabled || false"
       @input="(e) => handleInputChange(e, item)"
     />
   </div>

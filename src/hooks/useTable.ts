@@ -1,21 +1,30 @@
-import { computed, onMounted, reactive, Ref, ref, toRef, toRefs } from "vue";
-
+import { onMounted, reactive, Ref, ref, toRefs } from "vue";
 import { ElMessage } from "element-plus";
+import useReactive from "./useReactive";
+import { DEFAULT_FORM, DEFAULT_PAGE } from "@/config/dist";
 
 interface Params {
   api: Function;
-  params?: Object;
+  page?: Object;
+  form?: Object;
   handleSusscee?: Function;
   handleError?: Function;
 }
 interface Result {
+  form: Object;
+  page: Object;
   data: any;
   isLoading: Ref<Boolean>;
   getList: Function;
+  handlePagintion: Function;
 }
 
 const useTable = (options: Params): Result => {
-  const { api, params, handleSusscee, handleError } = options;
+  const { api, form: optionForm, page: optionPage, handleSusscee, handleError } = options;
+
+  const form = useReactive(optionForm) || reactive(DEFAULT_FORM);
+  const page = useReactive(optionPage) || reactive(DEFAULT_PAGE);
+
   let isLoading = ref(false);
   let resData = reactive({
     data: {},
@@ -24,7 +33,7 @@ const useTable = (options: Params): Result => {
   const getList = async () => {
     isLoading.value = true;
 
-    const res = await api(params);
+    const res = await api({ ...form, ...page });
     if (res.code === 200) {
       resData.data = res.data;
       if (handleSusscee) {
@@ -43,6 +52,17 @@ const useTable = (options: Params): Result => {
     isLoading.value = false;
   };
 
+  const handlePagintion = (params: any) => {
+    if (page) {
+      Object.keys(params).forEach((key: string) => {
+        if (page[key]) {
+          page[key] = params[key];
+        }
+      });
+    }
+    getList();
+  };
+
   onMounted(() => {
     getList();
   });
@@ -51,6 +71,9 @@ const useTable = (options: Params): Result => {
     ...toRefs(resData),
     isLoading,
     getList,
+    handlePagintion,
+    form,
+    page,
   };
 };
 

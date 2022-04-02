@@ -3,6 +3,7 @@
     <el-select
       v-model="formData[item.prop]"
       :props="item.props"
+      :disabled="item.disabled || false"
       clearable
       :placeholder="item?.config?.placeholder || SELECT_PLACEHOLDER"
       v-bind="item?.config?.columnConfig || {}"
