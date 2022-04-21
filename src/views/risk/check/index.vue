@@ -19,7 +19,7 @@
       <Table v-loading="loading" :column="tableColumn" :total="159" :list="list">
         <template #control="{ row }">
           <el-button type="text" @click="handleRiskDetail(row)"> 查看风险详情 </el-button>
-          <el-button type="text" @click="handleFocusDetail(row)"> 查看集中的详情 </el-button>
+          <el-button \ type="text" @click="handleFocusDetail(row)"> 查看集中的详情 </el-button>
         </template>
       </Table>
     </div>
@@ -29,7 +29,8 @@
 <script lang="ts">
 import { ElForm, ElMessage } from "element-plus";
 import { defineComponent, reactive, ref } from "vue";
-import Table, { TableColumn } from "@/components/table/index.vue";
+import Table from "@/components/table/index.vue";
+import { TableColumn } from "@/components/table/table";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 // import useStore from "@/store/children/risk";

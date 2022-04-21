@@ -14,8 +14,13 @@ export const SELECT_PLACEHOLDER = "请选择状态";
 // form
 export const DEFAULT_FORM = {};
 export const DEFAULT_PAGE = {
-  page: 1,
+  pageNum: 1,
   pageSize: 10,
   pageSizes: [10, 20, 50, 100],
   total: 0,
 };
+
+// page
+export const PAGE_KEY = "pageNum";
+export const PAGE_SIZE_KEY = "pageSize";
+export const PAGE_SIZES_KEY = "pageSizes";

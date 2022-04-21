@@ -13,7 +13,7 @@
     </el-table>
     <el-pagination
       v-if="isPagination"
-      v-model:currentPage="pagination.page"
+      v-model:currentPage="pagination.pageNum"
       :page-sizes="pagination.pageSizes"
       :total="pagination.total"
       :page-size="pagination.pageSize"
@@ -24,82 +24,63 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 // 定义时请使用 TableColumn<> 或者 Array<TableColumn>
-export interface TableColumn {
-  label: string;
-  prop?: string;
-  width?: string | number;
-  align?: "left" | "center" | "right";
-  slot?: string;
-}
+import { TableColumn, Pagination } from "./table";
 
-interface Pagination {
-  page: number;
-  pageSize: number;
-  total: number;
-  pageSizes: number[];
-}
-import { defineComponent, reactive, toRefs, PropType } from "vue";
-export default defineComponent({
-  props: {
-    isOrderNum: {
-      type: Boolean,
-      default: false,
-    },
-    column: {
-      type: Object as PropType<TableColumn[]>,
-      default: () => ({}),
-    },
-    list: {
-      type: Array,
-      default: () => [],
-    },
-    layout: {
-      type: String as PropType<string>,
-      default: "total, sizes, prev, pager, next, jumper",
-    },
-    isPagination: {
-      type: Boolean,
-      default: true,
-    },
-    pageSizes: {
-      type: Array as PropType<number[]>,
-      default: () => [10, 20, 50, 100],
-    },
-    total: {
-      type: Number,
-      default: 0,
-    },
+import { reactive, toRefs, PropType, defineProps, defineEmits } from "vue";
+const props = defineProps({
+  isOrderNum: {
+    type: Boolean,
+    default: false,
   },
-  emits: ["onPaginationChange"],
-  setup(props, { emit }) {
-    // 分页
-    const { pageSizes, total } = toRefs(props); // 因为是对象，外部数据会随着改变
-    const pagination: Pagination = reactive({
-      page: 1,
-      pageSize: 10,
-      total,
-      pageSizes,
-    });
-
-    const onPaginationChange = (val: number) => {
-      pagination.page = val;
-      emit("onPaginationChange", pagination);
-    };
-
-    const onSizeChange = (val: number) => {
-      pagination.pageSize = val;
-      emit("onPaginationChange", pagination);
-    };
-
-    return {
-      pagination,
-      onPaginationChange,
-      onSizeChange,
-    };
+  column: {
+    type: Object as PropType<TableColumn[]>,
+    default: () => ({}),
+  },
+  list: {
+    type: Array,
+    default: () => [],
+  },
+  layout: {
+    type: String as PropType<string>,
+    default: "total, sizes, prev, pager, next, jumper",
+  },
+  isPagination: {
+    type: Boolean,
+    default: true,
+  },
+  pageSizes: {
+    type: Array as PropType<number[]>,
+    default: () => [10, 20, 50, 100],
+  },
+  total: {
+    type: Number,
+    default: 0,
   },
 });
+
+const emit = defineEmits(["onPaginationChange"]);
+// export default defineComponent({
+// 分页
+const { pageSizes, total } = toRefs(props); // 因为是对象，外部数据会随着改变
+const pagination: Pagination = reactive({
+  pageNum: 1,
+  pageSize: 10,
+  total,
+  pageSizes,
+});
+
+const onPaginationChange = (val: number) => {
+  pagination.pageNum = val;
+  emit("onPaginationChange", pagination);
+};
+
+const onSizeChange = (val: number) => {
+  pagination.pageSize = val;
+  pagination.pageNum = 1;
+  emit("onPaginationChange", pagination);
+};
 </script>
 
 <style lang="less" scoped>

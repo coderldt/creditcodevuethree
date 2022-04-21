@@ -26,7 +26,8 @@
 import dayjs from "dayjs";
 import { computed, defineComponent, reactive, ref } from "vue";
 import { useStore } from "vuex";
-import Table, { TableColumn } from "@/components/table/index.vue";
+import Table from "@/components/table/index.vue";
+import { TableColumn } from "@/components/table/table";
 
 interface CircleOption {
   title?: object;

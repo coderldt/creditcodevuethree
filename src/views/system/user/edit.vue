@@ -7,7 +7,7 @@
 import { computed, defineComponent, Ref, ref, toRefs, watch, reactive } from "vue";
 import { statusList } from "@/config/system";
 import Form, { FormItem } from "@/components/form/form.vue";
-import { List } from "./index.vue";
+import { List } from "./user";
 import { ElForm } from "element-plus";
 
 export default defineComponent({

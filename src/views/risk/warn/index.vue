@@ -78,7 +78,8 @@
 <script lang="ts">
 import { ElForm, ElMessage } from "element-plus";
 import { computed, defineComponent, Ref, ref, watch } from "vue";
-import Table, { TableColumn } from "@/components/table/index.vue";
+import Table from "@/components/table/index.vue";
+import { TableColumn } from "@/components/table/table";
 import HandleWarning from "./handleWarning.vue";
 import CustomRiskRandom from "./customRiskRandom.vue";
 interface Form {
